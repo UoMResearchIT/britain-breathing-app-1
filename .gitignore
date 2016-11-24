@@ -3,8 +3,5 @@
 
 .DS_STORE
 .tmp/
-hooks/
 node_modules/
-platforms/
 plugins/
-resources/
