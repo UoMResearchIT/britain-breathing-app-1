@@ -7,14 +7,24 @@ import { Data } from '../pages/data/data';
 import { Allergies } from '../pages/allergies/allergies';
 import { Contact } from '../pages/contact/contact';
 import { Settings } from '../pages/settings/settings';
+import { Login } from '../pages/login/login';
+
+// Check if already registered
+var startPage;
+if(localStorage.getItem('userID')) {
+  startPage = Symptoms;
+} else {
+  startPage = Login;
+}
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Symptoms;
+  rootPage: any = startPage;
 
   pages: Array<{title: string, component: any}>;
 
