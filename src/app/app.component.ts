@@ -8,6 +8,7 @@ import { Allergies } from '../pages/allergies/allergies';
 import { Contact } from '../pages/contact/contact';
 import { Settings } from '../pages/settings/settings';
 import { Login } from '../pages/login/login';
+import { Terms } from '../pages/login/terms';
 
 // Check if already registered
 var startPage;
