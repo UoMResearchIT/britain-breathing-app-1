@@ -11,6 +11,24 @@ export class Login {
 
   constructor(public loadingCtrl: LoadingController, public modalCtrl: ModalController) {}
 
+  login = {
+    usercode: '',
+    password: '',
+    register: '',
+    button: 'Register',
+    terms: 'registering'
+  };
+
+  buttonText() {
+    if(this.login.register) {
+      this.login.button = 'Register';
+      this.login.terms = 'registering';
+    } else {
+      this.login.button = 'Sign in';
+      this.login.terms = 'signing in';
+    }
+  }
+
   signUp() {
     // Input validation
 
@@ -23,9 +41,13 @@ export class Login {
     loading.present();
 
     // Do the ajax call
+    
 
-    // Error handling, or redirect to app
-    localStorage.setItem("userID", "Smith");
+      // Set the userID on callback
+      localStorage.setItem("userID", "Smith");
+
+      // Error handling, or redirect to app
+
 
     // This needs a better transition to the main app
     window.location.reload();
