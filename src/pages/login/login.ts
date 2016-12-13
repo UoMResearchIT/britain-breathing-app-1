@@ -31,8 +31,6 @@ export class Login {
 
   /** Change text depending on the register toggle value */
   buttonText() {
-    console.log(this.login.register);
-
     if(this.login.register) {
       // Change the button text
       this.login.button = 'Register';
@@ -47,27 +45,25 @@ export class Login {
 
   /** Validate the usercodeinput */
   validateUsercode() {
-    if(this.login.usercode.length == 0) {
+    if(this.login.usercode.length <= 8) {
       // Invalid usercode
       this.login.error.message = 'Sorry, that usercode is invalid.';
       this.login.error.hide = false;
-      return false;
     } else {
-      return true;
+      this.login.error.hide = true;
+      this.checkAllFields();
     }
-
-    this.checkAllFields();
   }
 
   /** Validate the password input */
   validatePassword() {
-    if(this.login.password.length == 0) {
-      return false;
+    if(this.login.password.length <= 8) {
+      this.login.error.message = 'Sorry, that password is invalid.';
+      this.login.error.hide = false;
     } else {
-      return true;
+      this.login.error.hide = true;
+      this.checkAllFields();
     }
-
-    this.checkAllFields();
   }
 
   /** Validate the confirm password input */
@@ -76,27 +72,31 @@ export class Login {
       // Passwords don't match
       this.login.error.message = 'Your passwords don\'t match.';
       this.login.error.hide = false;
-      return false;
     } else {
-      return true;
+      this.login.error.hide = true;
+      this.checkAllFields();
     }
-
-    this.checkAllFields();
   }
 
   /** Show the sign in/up button if all fields are valid */
   checkAllFields() {
-    // Check the usercode and password
-    if(validateUsercode() && validatePassword()) {
-      // If they are registering also check the confirm password...
-      if(this.login.register) {
-        if(validateConfirmPassword()) {
-          // ...confirm password matches, show the button
-          this.login.hidebutton = false;
-        }
-      // ...otherwise show the button
-      } else {
+    this.login.error.hide = true;
+
+    if(this.login.register) {
+      // Registering, check the usercode, password and confirm password...
+      if(this.login.usercode.length >= 8 && this.login.password.length >= 8 && this.login.password === this.login.confirmpassword) {
+        // Show the button
         this.login.hidebutton = false;
+      } else {
+        this.login.hidebutton = true;
+      }
+    } else {
+      // Signing in, check the usercode and password
+      if(this.login.usercode.length >= 8 && this.login.password.length >= 8) {
+        // Show the button
+        this.login.hidebutton = false;
+      } else {
+        this.login.hidebutton = true;
       }
     }
   }
@@ -151,7 +151,7 @@ export class Login {
       this.http.post(apiURL, body, { headers: headers }).subscribe(data => {
         alert('ok');
       }, error => {
-          this.login.error.message = 'Something went wrong.';
+          this.login.error.message = 'An error occurred contacting the server. Please try again later.';
           this.login.error.hide = false;
       });
   }

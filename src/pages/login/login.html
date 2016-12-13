@@ -4,23 +4,23 @@
 
     <ion-list>
       <ion-item>
-        <ion-label fixed>Usercode</ion-label>
-        <ion-input name="usercode" type="text" [(ngModel)]="login.usercode" (keyup)="validateUsercode()"></ion-input>
+        <!--<ion-label stacked>Usercode</ion-label>-->
+        <ion-input placeholder="Usercode" name="usercode" type="text" [(ngModel)]="login.usercode" (keyup)="validateUsercode()"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label fixed>Password</ion-label>
-        <ion-input name="password" type="password" [(ngModel)]="login.password" (keyup)="validatePassword()"></ion-input>
+        <!--<ion-label stacked>Password</ion-label>-->
+        <ion-input placeholder="Password" name="password" type="password" [(ngModel)]="login.password" (keyup)="validatePassword()"></ion-input>
       </ion-item>
 
       <ion-item [hidden]="!login.register">
-        <ion-label fixed>Confirm password</ion-label>
-        <ion-input name="confirm-password" type="password" [(ngModel)]="login.confirmpassword" (keyup)="validateConfirmPassword()"></ion-input>
+        <!--<ion-label stacked>Confirm password</ion-label>-->
+        <ion-input placeholder="Confirm password" name="confirm-password" type="password" [(ngModel)]="login.confirmpassword" (keyup)="validateConfirmPassword()"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>New user?</ion-label>
-        <ion-toggle name="register" value="register" color="secondary" checked="true" [(ngModel)]="login.register" (click)="buttonText()"></ion-toggle>
+        <ion-toggle name="register" value="register" color="secondary" checked="true" [(ngModel)]="login.register" (click)="buttonText();checkAllFields()"></ion-toggle>
       </ion-item>
 
       <ion-item id="error-message" [hidden]="login.error.hide">
