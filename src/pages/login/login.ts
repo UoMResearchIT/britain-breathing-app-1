@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import { LoadingController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { Terms } from './terms';
@@ -9,19 +10,34 @@ import { Terms } from './terms';
 })
 export class Login {
 
-  constructor(public loadingCtrl: LoadingController, public modalCtrl: ModalController) {}
+  constructor(public loadingCtrl: LoadingController,
+              public modalCtrl: ModalController,
+              private http: Http
+            ) {}
 
   login = {
     usercode: '',
     password: '',
-    register: '',
+    confirmpassword: '',
+    register: true,
     button: 'Register',
-    terms: 'registering'
+    hidebutton: true,
+    terms: 'registering',
+    error: {
+      hide: true,
+      message: 'No errors here...'
+    }
   };
 
+  /** Change text depending on the register toggle value */
   buttonText() {
+    console.log(this.login.register);
+
     if(this.login.register) {
+      // Change the button text
       this.login.button = 'Register';
+
+      // Update the terms text
       this.login.terms = 'registering';
     } else {
       this.login.button = 'Sign in';
@@ -29,33 +45,115 @@ export class Login {
     }
   }
 
-  signUp() {
-    // Input validation
+  /** Validate the usercodeinput */
+  validateUsercode() {
+    if(this.login.usercode.length == 0) {
+      // Invalid usercode
+      this.login.error.message = 'Sorry, that usercode is invalid.';
+      this.login.error.hide = false;
+      return false;
+    } else {
+      return true;
+    }
 
+    this.checkAllFields();
+  }
+
+  /** Validate the password input */
+  validatePassword() {
+    if(this.login.password.length == 0) {
+      return false;
+    } else {
+      return true;
+    }
+
+    this.checkAllFields();
+  }
+
+  /** Validate the confirm password input */
+  validateConfirmPassword() {
+    if(this.login.password !== this.login.confirmpassword) {
+      // Passwords don't match
+      this.login.error.message = 'Your passwords don\'t match.';
+      this.login.error.hide = false;
+      return false;
+    } else {
+      return true;
+    }
+
+    this.checkAllFields();
+  }
+
+  /** Show the sign in/up button if all fields are valid */
+  checkAllFields() {
+    // Check the usercode and password
+    if(validateUsercode() && validatePassword()) {
+      // If they are registering also check the confirm password...
+      if(this.login.register) {
+        if(validateConfirmPassword()) {
+          // ...confirm password matches, show the button
+          this.login.hidebutton = false;
+        }
+      // ...otherwise show the button
+      } else {
+        this.login.hidebutton = false;
+      }
+    }
+  }
+
+  /** Sign in or register the user */
+  signInUp() {
     // Show the loader
     let loading = this.loadingCtrl.create({
       content: "Signing in...",
-      duration: 3000,
       dismissOnPageChange: true
     });
     loading.present();
 
     // Do the ajax call
-    
-
-      // Set the userID on callback
-      localStorage.setItem("userID", "Smith");
-
-      // Error handling, or redirect to app
-
-
-    // This needs a better transition to the main app
-    window.location.reload();
+    this.postData();
   }
 
   termsModal() {
     let modal = this.modalCtrl.create(Terms);
     modal.present();
+  }
+
+  /** Post the login or registration data */
+  postData() {
+    var base64Credentials = window.btoa(this.login.usercode+':'+this.login.password);
+    var body = {
+      "clientkey": "583c09d1-0d2c-49ae-bff5-de02c8af5ca7",
+      "studyid": "123",
+      "credentials": base64Credentials,
+      "useragent": navigator.userAgent,
+      "eot": true
+      }
+
+      /***
+
+        TODO: BASE URL TO BE UPDATED FOR PRODUCTION
+
+      ***/
+      var baseURL = 'http://webnet.humanities.manchester.ac.uk/StorageConnect';
+      var apiURL = '';
+      if(this.login.register) {
+        // Post the registration details
+        apiURL = baseURL+'/api/v1/register/';
+      } else {
+        // Post the login details
+        apiURL = baseURL+'/api/v1/login/.';
+      }
+
+      var headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      this.http.post(apiURL, body, { headers: headers }).subscribe(data => {
+        alert('ok');
+      }, error => {
+          this.login.error.message = 'Something went wrong.';
+          this.login.error.hide = false;
+      });
   }
 
 }

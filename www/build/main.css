@@ -21748,3 +21748,11 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
+
+#error-message {
+  background: #f00;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}

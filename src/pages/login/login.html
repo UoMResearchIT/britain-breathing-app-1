@@ -5,23 +5,33 @@
     <ion-list>
       <ion-item>
         <ion-label fixed>Usercode</ion-label>
-        <ion-input name="usercode" type="text" [(ngModel)]="login.usercode"></ion-input>
+        <ion-input name="usercode" type="text" [(ngModel)]="login.usercode" (keyup)="validateUsercode()"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>Password</ion-label>
-        <ion-input name="password" type="password" [(ngModel)]="login.password"></ion-input>
+        <ion-input name="password" type="password" [(ngModel)]="login.password" (keyup)="validatePassword()"></ion-input>
+      </ion-item>
+
+      <ion-item [hidden]="!login.register">
+        <ion-label fixed>Confirm password</ion-label>
+        <ion-input name="confirm-password" type="password" [(ngModel)]="login.confirmpassword" (keyup)="validateConfirmPassword()"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label>New user?</ion-label>
         <ion-toggle name="register" value="register" color="secondary" checked="true" [(ngModel)]="login.register" (click)="buttonText()"></ion-toggle>
       </ion-item>
-    </ion-list>
 
-    <div padding>
-      <button ion-button full (click)="signUp()">{{login.button}}</button>
-    </div>
+      <ion-item id="error-message" [hidden]="login.error.hide">
+        <!-- Any error messages on login -->
+        {{login.error.message}}
+      </ion-item>
+
+      <div padding [hidden]="login.hidebutton">
+        <button ion-button full (click)="signInUp()">{{login.button}}</button>
+      </div>
+    </ion-list>
 
     <p padding>
       By {{login.terms}} you agree to the <a (click)="termsModal()">terms and conditions</a>.
