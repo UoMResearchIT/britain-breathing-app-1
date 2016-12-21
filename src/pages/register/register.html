@@ -1,0 +1,92 @@
+<ion-content>
+  <ion-slides pager>
+
+    <ion-slide padding>
+      <ion-icon name="contact" class="center"></ion-icon>
+      <h2 padding>About You</h2>
+      <p padding>Please complete the following information, then swipe to continue.</p>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>Year of birth</ion-label>
+          <ion-select [(ngModel)]="gaming">
+            <ion-option value="nes">1999</ion-option>
+            <ion-option value="n64">Nintendo64</ion-option>
+            <ion-option value="ps">PlayStation</ion-option>
+            <ion-option value="genesis">Sega Genesis</ion-option>
+            <ion-option value="saturn">Sega Saturn</ion-option>
+            <ion-option value="snes">SNES</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list radio-group>
+        <ion-list-header>
+          Gender
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio checked="true" value="male"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Female</ion-label>
+          <ion-radio value="female"></ion-radio>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Allergy types
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Hayfever (pollen)</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Asthma</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Other allergy e.g. dust</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Unknown allergy</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+      </ion-list>
+
+      <ion-icon name="arrow-dropright" class="center"></ion-icon>
+    </ion-slide>
+
+    <ion-slide padding>
+      <ion-icon name="alarm" class="center"></ion-icon>
+      <h2 padding>Alerts</h2>
+
+
+      <ion-icon name="arrow-dropright" class="center"></ion-icon>
+    </ion-slide>
+
+    <ion-slide padding>
+      <ion-icon name="analytics" class="center"></ion-icon>
+      <h2 padding>Data sharing</h2>
+
+
+      <ion-icon name="arrow-dropright" class="center"></ion-icon>
+    </ion-slide>
+
+    <ion-slide padding>
+      <h2 padding>Welcome to Britain Breathing</h2>
+      <p padding>Thanks for completing your settings information.</p>
+      <ion-icon name="thumbs-up" class="center"></ion-icon>
+      <button padding ion-button full round (click)="onboardingComplete()">Continue</button>
+    </ion-slide>
+
+  </ion-slides>
+<ion-content>

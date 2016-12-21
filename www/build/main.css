@@ -21749,10 +21749,57 @@ sub {
   }
 }
 
-#error-message {
+page-login #header-img {
+  margin: 50px 0 0;
+}
+
+page-login h1, page-login h4 {
+  margin: 0;
+  padding: 0 16px 5px !important;
+  text-align: center;
+}
+
+page-login h4 {
+  padding: 0 16px 15px !important;
+}
+
+page-login .terms {
+  text-align: center;
+}
+
+page-login #error-message {
   background: #f00;
   color: #fff;
   padding: 10px;
   text-align: center;
   font-weight: bold;
+  margin: 20px 0 0;
+}
+
+page-login #error-message .item-inner {
+  border: none;
+}
+
+page-login p {
+  margin: 0;
+}
+
+page-login ion-icon {
+  font-size: 4em;
+  margin: 5px auto;
+  width: 100%;
+}
+
+page-login .center {
+  text-align: center;
+}
+
+page-register ion-icon {
+  font-size: 4em;
+  margin: 5px auto;
+  width: 100%;
+}
+
+page-register .center {
+  text-align: center;
 }

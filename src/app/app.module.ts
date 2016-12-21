@@ -7,6 +7,7 @@ import { Data } from '../pages/data/data';
 import { Allergies } from '../pages/allergies/allergies';
 import { Contact } from '../pages/contact/contact';
 import { Settings } from '../pages/settings/settings';
+import { Register } from '../pages/register/register';
 import { Login } from '../pages/login/login';
 import { Terms } from '../pages/login/terms';
 
@@ -18,6 +19,7 @@ import { Terms } from '../pages/login/terms';
     Allergies,
     Contact,
     Settings,
+    Register,
     Login,
     Terms
   ],
@@ -32,6 +34,7 @@ import { Terms } from '../pages/login/terms';
     Allergies,
     Contact,
     Settings,
+    Register,
     Login,
     Terms
   ],

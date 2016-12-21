@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { LoadingController } from 'ionic-angular';
-import { ModalController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController } from 'ionic-angular';
+//import { Platform } from 'ionic-angular';
+
 import { Terms } from './terms';
+import { Symptoms } from '../symptoms/symptoms';
+import { Register } from '../register/register';
 
 @Component({
   selector: 'page-login',
@@ -12,7 +15,8 @@ export class Login {
 
   constructor(public loadingCtrl: LoadingController,
               public modalCtrl: ModalController,
-              private http: Http
+              public navCtrl: NavController,
+              public http: Http
             ) {}
 
   login = {
@@ -105,7 +109,7 @@ export class Login {
   signInUp() {
     // Show the loader
     let loading = this.loadingCtrl.create({
-      content: "Signing in...",
+      content: this.login.terms+"...",
       dismissOnPageChange: true
     });
     loading.present();
@@ -122,38 +126,53 @@ export class Login {
   /** Post the login or registration data */
   postData() {
     var base64Credentials = window.btoa(this.login.usercode+':'+this.login.password);
-    var body = {
-      "clientkey": "583c09d1-0d2c-49ae-bff5-de02c8af5ca7",
-      "studyid": "123",
+    var message = {
+      "clientkey": "1234",
+      "studyid": "12345",
       "credentials": base64Credentials,
       "useragent": navigator.userAgent,
       "eot": true
-      }
+    };
+    var messageString = JSON.stringify(message);
+    //console.log(messageString);
 
-      /***
+    /***
 
-        TODO: BASE URL TO BE UPDATED FOR PRODUCTION
+      TODO: BASE URL TO BE UPDATED FOR PRODUCTION
 
-      ***/
-      var baseURL = 'http://webnet.humanities.manchester.ac.uk/StorageConnect';
-      var apiURL = '';
-      if(this.login.register) {
-        // Post the registration details
-        apiURL = baseURL+'/api/v1/register/';
-      } else {
-        // Post the login details
-        apiURL = baseURL+'/api/v1/login/.';
-      }
+    ***/
+    var baseURL = 'http://webnet.humanities.manchester.ac.uk/StorageConnect';
+    var apiURL = '';
+    if(this.login.register) {
+      // Post the registration details
+      apiURL = baseURL+'/api/v1/register/';
+    } else {
+      // Post the login details
+      apiURL = baseURL+'/api/v1/login/';
+    }
 
-      var headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
-      this.http.post(apiURL, body, { headers: headers }).subscribe(data => {
-        alert('ok');
-      }, error => {
-          this.login.error.message = 'An error occurred contacting the server. Please try again later.';
-          this.login.error.hide = false;
-      });
+    this.http.post(apiURL, messageString, { headers: headers }).subscribe(data => {
+        // Login successful
+        localStorage.setItem('userID', data.json().Details);
+        // Update the root page
+        //this.navCtrl.setRoot(Symptoms);
+
+        // Do the initial onboarding of data
+        if(this.login.register) {
+          this.navCtrl.push(Register);
+        } else {
+          // Redirect to the symptoms page if just signing back in
+          this.navCtrl.setRoot(Symptoms);
+        }
+    }, error => {
+        this.login.error.message = 'An error occurred. Try again later.';
+        this.login.error.hide = false;
+    });
+    //localStorage.setItem('userID', 'test');
+    //window.location.reload();
   }
 
 }

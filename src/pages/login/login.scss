@@ -1,3 +1,47 @@
 page-login {
+  #header-img {
+    margin: 50px 0 0;
+  }
+
+  h1, h4 {
+    margin: 0;
+    padding: 0 16px 5px !important;
+    text-align: center;
+  }
+
+  h4 {
+    padding: 0 16px 15px !important;
+  }
+
+  .terms {
+    text-align: center;
+  }
+
+  #error-message {
+    background: #f00;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0 0;
+  }
+
+  #error-message .item-inner {
+    border: none;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  ion-icon {
+    font-size: 4em;
+    margin: 5px auto;
+    width: 100%;
+  }
+
+  .center {
+    text-align: center;
+  }
 
 }

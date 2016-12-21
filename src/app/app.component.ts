@@ -7,6 +7,7 @@ import { Data } from '../pages/data/data';
 import { Allergies } from '../pages/allergies/allergies';
 import { Contact } from '../pages/contact/contact';
 import { Settings } from '../pages/settings/settings';
+import { Register } from '../pages/register/register';
 import { Login } from '../pages/login/login';
 import { Terms } from '../pages/login/terms';
 
@@ -31,6 +32,7 @@ export class MyApp {
 
   constructor(public platform: Platform) {
     this.initializeApp();
+    Splashscreen.show();
 
     // used for an example of ngFor and navigation
     this.pages = [
