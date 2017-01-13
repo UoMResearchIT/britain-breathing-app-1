@@ -9,18 +9,13 @@
       <ion-list>
         <ion-item>
           <ion-label>Year of birth</ion-label>
-          <ion-select [(ngModel)]="gaming">
-            <ion-option value="nes">1999</ion-option>
-            <ion-option value="n64">Nintendo64</ion-option>
-            <ion-option value="ps">PlayStation</ion-option>
-            <ion-option value="genesis">Sega Genesis</ion-option>
-            <ion-option value="saturn">Sega Saturn</ion-option>
-            <ion-option value="snes">SNES</ion-option>
+          <ion-select [(ngModel)]="registration.dob">
+            <ion-option ng-repeat="item in allYears" value="{{item}}">{{item}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-list>
 
-      <ion-list radio-group>
+      <ion-list radio-group [(ngModel)]="registration.gender">
         <ion-list-header>
           Gender
         </ion-list-header>
@@ -36,6 +31,14 @@
         </ion-item>
       </ion-list>
 
+      <ion-icon name="arrow-dropright" class="center"></ion-icon>
+    </ion-slide>
+
+    <ion-slide padding>
+      <ion-icon name="flower" class="center"></ion-icon>
+      <h2 padding>Your allergies</h2>
+      <p padding>Let us know what allergies you have.</p>
+
       <ion-list>
         <ion-list-header>
           Allergy types
@@ -43,22 +46,22 @@
 
         <ion-item>
           <ion-label>Hayfever (pollen)</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="true"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Asthma</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="true"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Other allergy e.g. dust</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.other" value="true"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Unknown allergy</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.unknown" value="true"></ion-checkbox>
         </ion-item>
       </ion-list>
 
@@ -68,7 +71,16 @@
     <ion-slide padding>
       <ion-icon name="alarm" class="center"></ion-icon>
       <h2 padding>Alerts</h2>
+      <p padding>Enable a daily reminder to complete your allergy information.</p>
 
+      <ion-item>
+        <ion-toggle id="alert-toggle" class="center" [(ngModel)]="registration.alert" color="secondary" checked="true"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Select time:</ion-label>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="registration.alerttime"></ion-datetime>
+      </ion-item>
 
       <ion-icon name="arrow-dropright" class="center"></ion-icon>
     </ion-slide>
@@ -76,7 +88,21 @@
     <ion-slide padding>
       <ion-icon name="analytics" class="center"></ion-icon>
       <h2 padding>Data sharing</h2>
+      <p padding>Finally, just confirm you're happy to share the data.</p>
 
+      <p class="terms-text" padding> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+      <ion-list>
+        <ion-item>
+          <ion-label>I accept the above terms</ion-label>
+          <ion-checkbox [(ngModel)]="registration.datasharing"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Prompt me before sending data</ion-label>
+          <ion-checkbox [(ngModel)]="registration.dataprompt"></ion-checkbox>
+        </ion-item>
+      </ion-list>
 
       <ion-icon name="arrow-dropright" class="center"></ion-icon>
     </ion-slide>

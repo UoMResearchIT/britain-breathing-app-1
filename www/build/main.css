@@ -21772,6 +21772,7 @@ page-login #error-message {
   color: #fff;
   padding: 10px;
   text-align: center;
+  font-size: 14px;
   font-weight: bold;
   margin: 20px 0 0;
 }
@@ -21801,5 +21802,16 @@ page-register ion-icon {
 }
 
 page-register .center {
+  text-align: center;
+}
+
+page-register .terms-text {
+  text-align: left;
+  font-size: 12px;
+}
+
+page-register #alert-toggle {
+  margin: 0 40% 50px;
+  width: 80px;
   text-align: center;
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { LoadingController, ModalController, NavController } from 'ionic-angular';
 //import { Platform } from 'ionic-angular';
 
@@ -49,9 +49,9 @@ export class Login {
 
   /** Validate the usercodeinput */
   validateUsercode() {
-    if(this.login.usercode.length <= 8) {
+    if(this.login.usercode.length <= 4) {
       // Invalid usercode
-      this.login.error.message = 'Sorry, that usercode is invalid.';
+      this.login.error.message = 'Usercode must be at least 5 characters';
       this.login.error.hide = false;
     } else {
       this.login.error.hide = true;
@@ -61,8 +61,8 @@ export class Login {
 
   /** Validate the password input */
   validatePassword() {
-    if(this.login.password.length <= 8) {
-      this.login.error.message = 'Sorry, that password is invalid.';
+    if(this.login.password.length <= 4) {
+      this.login.error.message = 'Password must be at least 5 characters';
       this.login.error.hide = false;
     } else {
       this.login.error.hide = true;
@@ -74,7 +74,7 @@ export class Login {
   validateConfirmPassword() {
     if(this.login.password !== this.login.confirmpassword) {
       // Passwords don't match
-      this.login.error.message = 'Your passwords don\'t match.';
+      this.login.error.message = 'Your passwords don\'t match';
       this.login.error.hide = false;
     } else {
       this.login.error.hide = true;
@@ -88,7 +88,7 @@ export class Login {
 
     if(this.login.register) {
       // Registering, check the usercode, password and confirm password...
-      if(this.login.usercode.length >= 8 && this.login.password.length >= 8 && this.login.password === this.login.confirmpassword) {
+      if(this.login.usercode.length >= 5 && this.login.password.length >= 5 && this.login.password === this.login.confirmpassword) {
         // Show the button
         this.login.hidebutton = false;
       } else {
@@ -96,7 +96,7 @@ export class Login {
       }
     } else {
       // Signing in, check the usercode and password
-      if(this.login.usercode.length >= 8 && this.login.password.length >= 8) {
+      if(this.login.usercode.length >= 5 && this.login.password.length >= 5) {
         // Show the button
         this.login.hidebutton = false;
       } else {
@@ -115,7 +115,7 @@ export class Login {
     loading.present();
 
     // Do the ajax call
-    this.postData();
+    this.postData(loading);
   }
 
   termsModal() {
@@ -124,7 +124,7 @@ export class Login {
   }
 
   /** Post the login or registration data */
-  postData() {
+  postData(loading) {
     var base64Credentials = window.btoa(this.login.usercode+':'+this.login.password);
     var message = {
       "clientkey": "1234",
@@ -136,11 +136,6 @@ export class Login {
     var messageString = JSON.stringify(message);
     //console.log(messageString);
 
-    /***
-
-      TODO: BASE URL TO BE UPDATED FOR PRODUCTION
-
-    ***/
     var baseURL = 'http://webnet.humanities.manchester.ac.uk/StorageConnect';
     var apiURL = '';
     if(this.login.register) {
@@ -151,14 +146,20 @@ export class Login {
       apiURL = baseURL+'/api/v1/login/';
     }
 
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    ///////////// FOR DEV
+    //this.navCtrl.push(Register);
+    //return false;
+    ///////////// FOR DEV
 
-    this.http.post(apiURL, messageString, { headers: headers }).subscribe(data => {
+
+    var headers = new Headers({ 'Content-Type': 'application/json' });
+    var options = new RequestOptions({ headers: headers });
+
+    this.http.post(apiURL, messageString, options).subscribe(data => {
         // Login successful
         localStorage.setItem('userID', data.json().Details);
-        // Update the root page
-        //this.navCtrl.setRoot(Symptoms);
+        // Close the loader
+        loading.dismiss();
 
         // Do the initial onboarding of data
         if(this.login.register) {
@@ -168,11 +169,12 @@ export class Login {
           this.navCtrl.setRoot(Symptoms);
         }
     }, error => {
-        this.login.error.message = 'An error occurred. Try again later.';
+        //console.log(error);
+        loading.dismiss();
+        this.login.error.message = error.statusText;
         this.login.error.hide = false;
     });
-    //localStorage.setItem('userID', 'test');
-    //window.location.reload();
+    
   }
 
 }
