@@ -10,7 +10,7 @@
         <ion-item>
           <ion-label>Year of birth</ion-label>
           <ion-select [(ngModel)]="registration.dob">
-            <ion-option ng-repeat="item in allYears" value="{{item}}">{{item}}</ion-option>
+            <ion-option *ngFor="let item of allYears" value="{{item}}">{{item}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-list>
@@ -80,6 +80,19 @@
       <ion-item>
         <ion-label>Select time:</ion-label>
         <ion-datetime displayFormat="HH:mm" [(ngModel)]="registration.alerttime"></ion-datetime>
+      </ion-item>
+
+      <ion-icon name="arrow-dropright" class="center"></ion-icon>
+    </ion-slide>
+
+    <ion-slide padding>
+      <ion-icon name="contacts" class="center"></ion-icon>
+      <h2 padding>Contact</h2>
+      <p padding>If you're happy to have a chat about your experience please provide your email.</p>
+      <p class="terms-text" padding>This is optional, and your email address is not attached to your data. Contacting participants helps us improve our research.</p>
+
+      <ion-item>
+        <ion-input type="email" placeholder="email@address.com" [(ngModel)]="registration.email"></ion-input>
       </ion-item>
 
       <ion-icon name="arrow-dropright" class="center"></ion-icon>

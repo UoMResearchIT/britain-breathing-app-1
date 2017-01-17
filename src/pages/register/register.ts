@@ -28,17 +28,17 @@ export class Register {
     dataprompt: false
   }
 
-  allYears = []
+  allYears = [];
 
   addYears() {
     var startYear = new Date().getFullYear();
     startYear = startYear-17;
     var i=100;
-    this.allYears.push(startYear);
+    this.allYears.push(startYear.toString());
 
     for(i;i>0;i--) {
       startYear = startYear-1;
-      this.allYears.push(startYear);
+      this.allYears.push(startYear.toString());
     }
 
     console.log(this.allYears);

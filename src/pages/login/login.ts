@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { LoadingController, ModalController, NavController } from 'ionic-angular';
+import jsSHA from 'jssha';
 //import { Platform } from 'ionic-angular';
 
 import { Terms } from './terms';
@@ -125,7 +126,13 @@ export class Login {
 
   /** Post the login or registration data */
   postData(loading) {
-    var base64Credentials = window.btoa(this.login.usercode+':'+this.login.password);
+    // Hash the usercode
+    var shaObj = new jsSHA("SHA-256", "TEXT");
+    shaObj.update(this.login.usercode);
+    var hashedUC = shaObj.getHash("HEX");
+
+    // Create the json string
+    var base64Credentials = window.btoa(hashedUC+':'+this.login.password);
     var message = {
       "clientkey": "1234",
       "studyid": "12345",
@@ -147,11 +154,11 @@ export class Login {
     }
 
     ///////////// FOR DEV
-    //this.navCtrl.push(Register);
+    this.navCtrl.push(Register);
     //return false;
     ///////////// FOR DEV
 
-
+    /*
     var headers = new Headers({ 'Content-Type': 'application/json' });
     var options = new RequestOptions({ headers: headers });
 
@@ -174,7 +181,7 @@ export class Login {
         this.login.error.message = error.statusText;
         this.login.error.hide = false;
     });
-    
+    */
   }
 
 }

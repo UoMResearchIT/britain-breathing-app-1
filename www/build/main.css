@@ -21795,6 +21795,10 @@ page-login .center {
   text-align: center;
 }
 
+page-register {
+  /* Pagination bullets not showing: hack fix */
+}
+
 page-register ion-icon {
   font-size: 4em;
   margin: 5px auto;
@@ -21814,4 +21818,8 @@ page-register #alert-toggle {
   margin: 0 40% 50px;
   width: 80px;
   text-align: center;
+}
+
+page-register .swiper-pagination {
+  display: block !important;
 }

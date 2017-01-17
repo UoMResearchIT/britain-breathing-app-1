@@ -19,4 +19,9 @@ page-register {
     width: 80px;
     text-align: center;
   }
+
+  /* Pagination bullets not showing: hack fix */
+  .swiper-pagination {
+    display: block!important;
+  }
 }
