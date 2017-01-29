@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "ionic-bb-app",
+  "author": "Research IT UoM",
+  "homepage": "http://manchester.ac.uk",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
@@ -17,8 +17,9 @@
     "@angular/platform-browser": "2.1.1",
     "@angular/platform-browser-dynamic": "2.1.1",
     "@angular/platform-server": "2.1.1",
-    "@ionic/storage": "1.1.6",
+    "@ionic/storage": "^1.1.6",
     "@types/jssha": "0.0.29",
+    "font-awesome": "^4.7.0",
     "ionic-angular": "2.0.0-rc.3",
     "ionic-native": "2.2.3",
     "ionicons": "3.0.0",
@@ -46,5 +47,5 @@
       "locator": "ios"
     }
   ],
-  "description": "app: An Ionic project"
+  "description": "app: britain breathing"
 }

@@ -1,3 +1,38 @@
 page-symptoms {
+  h2 {
+    text-align: center;
+  }
 
+  #symptoms-icons .symptoms-icon {
+    width: 100px;
+    display: block;
+    font-size: 5em;
+    margin: 30px auto 0;
+  }
+
+  .symptoms-icon-img {
+    fill: #ff0;
+  }
+
+  #symptoms-icons p {
+    text-align: center;
+    font-size: 2em;
+    margin: 0 auto 20px;
+    padding: 0;
+  }
+
+  #symptoms-thanks ion-icon {
+    width: 60px;
+    display: block;
+    font-size: 5em;
+    margin: 30px auto 0;
+  }
+
+  .symptom-rating {
+    float: right;
+    background: #387ef5;
+    border-radius: 3px;
+    padding: 3px;
+    color: #fff;
+  }
 }

@@ -21823,3 +21823,40 @@ page-register #alert-toggle {
 page-register .swiper-pagination {
   display: block !important;
 }
+
+page-symptoms h2 {
+  text-align: center;
+}
+
+page-symptoms #symptoms-icons .symptoms-icon {
+  width: 100px;
+  display: block;
+  font-size: 5em;
+  margin: 30px auto 0;
+}
+
+page-symptoms .symptoms-icon-img {
+  fill: #ff0;
+}
+
+page-symptoms #symptoms-icons p {
+  text-align: center;
+  font-size: 2em;
+  margin: 0 auto 20px;
+  padding: 0;
+}
+
+page-symptoms #symptoms-thanks ion-icon {
+  width: 60px;
+  display: block;
+  font-size: 5em;
+  margin: 30px auto 0;
+}
+
+page-symptoms .symptom-rating {
+  float: right;
+  background: #387ef5;
+  border-radius: 3px;
+  padding: 3px;
+  color: #fff;
+}

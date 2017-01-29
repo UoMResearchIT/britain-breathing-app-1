@@ -22,12 +22,12 @@
 
         <ion-item>
           <ion-label>Male</ion-label>
-          <ion-radio checked="true" value="male"></ion-radio>
+          <ion-radio checked="true" value="0"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Female</ion-label>
-          <ion-radio value="female"></ion-radio>
+          <ion-radio value="1"></ion-radio>
         </ion-item>
       </ion-list>
 
@@ -46,22 +46,22 @@
 
         <ion-item>
           <ion-label>Hayfever (pollen)</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="true"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Asthma</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="true"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Other allergy e.g. dust</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.other" value="true"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.other" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Unknown allergy</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.unknown" value="true"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.allergies.unknown" value="1"></ion-checkbox>
         </ion-item>
       </ion-list>
 
@@ -74,7 +74,7 @@
       <p padding>Enable a daily reminder to complete your allergy information.</p>
 
       <ion-item>
-        <ion-toggle id="alert-toggle" class="center" [(ngModel)]="registration.alert" color="secondary" checked="true"></ion-toggle>
+        <ion-toggle id="alert-toggle" class="center" [(ngModel)]="registration.alert" color="secondary" checked="true" value="1"></ion-toggle>
       </ion-item>
 
       <ion-item>
@@ -89,7 +89,7 @@
       <ion-icon name="contacts" class="center"></ion-icon>
       <h2 padding>Contact</h2>
       <p padding>If you're happy to have a chat about your experience please provide your email.</p>
-      <p class="terms-text" padding>This is optional, and your email address is not attached to your data. Contacting participants helps us improve our research.</p>
+      <p class="terms-text" padding>This is optional, and your email address is not attached to your data. Contacting participants helps us improve our research. You can opt out again in the settings.</p>
 
       <ion-item>
         <ion-input type="email" placeholder="email@address.com" [(ngModel)]="registration.email"></ion-input>
@@ -103,17 +103,19 @@
       <h2 padding>Data sharing</h2>
       <p padding>Finally, just confirm you're happy to share the data.</p>
 
-      <p class="terms-text" padding> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div padding>
+        <button ion-button full round (click)="termsModal()">Terms and Conditions</button>
+      </div>
 
       <ion-list>
         <ion-item>
           <ion-label>I accept the above terms</ion-label>
-          <ion-checkbox [(ngModel)]="registration.datasharing"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.datasharing" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
           <ion-label>Prompt me before sending data</ion-label>
-          <ion-checkbox [(ngModel)]="registration.dataprompt"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="registration.dataprompt" value="1"></ion-checkbox>
         </ion-item>
       </ion-list>
 

@@ -8,9 +8,54 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>My Symptoms</h3>
+  <div [hidden]="page.howfeeling" id="symptoms-icons">
+    <h2 padding>How are you feeling today?</h2>
 
-  <p>
-      Lipsum...
-  </p>
+    <img padding src="assets/img/smile.svg" class="symptoms-icon center" (click)="symptomsPage(0)">
+    <p padding>Great</p>
+
+    <img padding src="assets/img/neutral.svg" class="symptoms-icon center" (click)="symptomsPage(1)">
+    <p padding>So-So</p>
+
+    <img padding src="assets/img/sad.svg" class="symptoms-icon center" (click)="symptomsPage(2)">
+    <p padding>Bad</p>
+  </div>
+
+  <div [hidden]="page.symptoms">
+    <h2 padding>How are your allergies affecting you?</h2>
+
+    <p padding>Nose <span class="symptom-rating">Rating: {{symptoms.nose}}</span></p>
+    <ion-item>
+      <ion-range [(ngModel)]="symptoms.nose" color="secondary" min="0" max="2" step="1" snaps="true">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>2</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <p padding>Breathing <span class="symptom-rating">Rating: {{symptoms.breathing}}</span></p>
+    <ion-item>
+      <ion-range [(ngModel)]="symptoms.breathing" color="secondary" min="0" max="2" step="1" snaps="true">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>2</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <p padding>Eyes <span class="symptom-rating">Rating: {{symptoms.eyes}}</span></p>
+    <ion-item>
+      <ion-range [(ngModel)]="symptoms.eyes" color="secondary" min="0" max="2" step="1" snaps="true">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>2</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <button padding ion-button full round (click)="submitSymptoms()">Submit data</button>
+  </div>
+
+  <div [hidden]="page.thanks" id="symptoms-thanks">
+    <h2 padding>Thanks, you just helped science!</h2>
+
+    <ion-icon name="thumbs-up" class="center"></ion-icon>
+
+    <button padding ion-button full round (click)="finishedSymptoms()">Done</button>
+  </div>
 </ion-content>

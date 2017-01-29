@@ -141,6 +141,7 @@ export class Login {
       "eot": true
     };
     var messageString = JSON.stringify(message);
+    localStorage.setItem('usercode', hashedUC);
     //console.log(messageString);
 
     var baseURL = 'http://webnet.humanities.manchester.ac.uk/StorageConnect';
@@ -148,15 +149,18 @@ export class Login {
     if(this.login.register) {
       // Post the registration details
       apiURL = baseURL+'/api/v1/register/';
+
+      ///////////// FOR DEV
+      this.navCtrl.push(Register);
+      ///////////// FOR DEV
     } else {
       // Post the login details
       apiURL = baseURL+'/api/v1/login/';
-    }
 
-    ///////////// FOR DEV
-    this.navCtrl.push(Register);
-    //return false;
-    ///////////// FOR DEV
+      ///////////// FOR DEV
+      this.navCtrl.setRoot(Symptoms);
+      ///////////// FOR DEV
+    }
 
     /*
     var headers = new Headers({ 'Content-Type': 'application/json' });
