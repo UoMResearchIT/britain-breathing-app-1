@@ -8,5 +8,41 @@
 </ion-header>
 
 <ion-content>
-  <p padding>Lorem ipsum...</p>
+  <ion-list radio-group [(ngModel)]="chartSelection">
+    <ion-item>
+      <ion-label>Nose</ion-label>
+      <ion-radio value="nose" (click)="showChart('nose')"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Eyes</ion-label>
+      <ion-radio value="eyes" (click)="showChart('eyes')"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Breathing</ion-label>
+      <ion-radio value="breathing" (click)="showChart('breathing')"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>How I'm Doing</ion-label>
+      <ion-radio value="howimdoing" (click)="showChart('howimdoing')"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div [hidden]="chart.nose" id="chart-nose">
+    <div class="chart-graph" id="nosechart"><div style="text-align:center;padding:20px;">Loading...</div></div>
+  </div>
+
+  <div [hidden]="chart.eyes" id="chart-eyes">
+    <div class="chart-graph" id="eyeschart"><div style="text-align:center;padding:20px;">Loading...</div></div>
+  </div>
+
+  <div [hidden]="chart.breathing" id="chart-breathing">
+    <div class="chart-graph" id="breathingchart"><div style="text-align:center;padding:20px;">Loading...</div></div>
+  </div>
+
+  <div [hidden]="chart.howimdoing" id="chart-howimdoing">
+    <div class="chart-graph" id="howimdoingchart"><div style="text-align:center;padding:20px;">Loading...</div></div>
+  </div>
 </ion-content>

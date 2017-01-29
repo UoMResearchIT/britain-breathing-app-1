@@ -40,8 +40,8 @@ export class Symptoms {
     } else {
       // Confirm medication taken, then show allergy symptoms page
       let alert = this.alertCtrl.create({
-        title: 'Please confirm',
-        message: 'I have taken my medication for allergies today?',
+        title: 'Please confirm:',
+        message: 'Have you taken your medication for allergies today?',
         buttons: [
           {
             text: 'No',
@@ -75,7 +75,7 @@ export class Symptoms {
     var self = this;
 
     let alert = this.alertCtrl.create({
-      title: 'Please confirm',
+      title: 'Please confirm:',
       message: 'Do you want send your data now?',
       buttons: [
         {
