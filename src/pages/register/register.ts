@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, ModalController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ModalController, ToastController, Slides } from 'ionic-angular';
 
 import { Symptoms } from '../symptoms/symptoms';
 import { Terms } from '../login/terms';
@@ -11,6 +11,8 @@ import { SQLite } from 'ionic-native';
   templateUrl: 'register.html'
 })
 export class Register {
+  @ViewChild(Slides) slides: Slides;
+
   public database: SQLite;
 
   public registration = {
@@ -155,6 +157,10 @@ export class Register {
   termsModal() {
     let modal = this.modalCtrl.create(Terms);
     modal.present();
+  }
+
+  nextSlide() {
+    this.slides.slideNext(500); 
   }
 
 }

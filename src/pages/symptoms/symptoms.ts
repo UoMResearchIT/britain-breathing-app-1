@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 
 import { NavController, AlertController } from 'ionic-angular';
 
+import { Home } from '../home/home';
+
+import { sizeof } from 'sizeof';
+
 @Component({
   selector: 'page-symptoms',
   templateUrl: 'symptoms.html'
@@ -16,7 +20,8 @@ export class Symptoms {
     meds: 0,
     datetime: '',
     lat: 0.0,
-    long: 0.0
+    long: 0.0,
+    rating: ['None', 'Mild', 'Moderate', 'Severe']
   }
 
   public page = {
@@ -76,7 +81,8 @@ export class Symptoms {
 
     let alert = this.alertCtrl.create({
       title: 'Please confirm:',
-      message: 'Do you want send your data now?',
+      message: 'Do you want send your data now? This will use 0.2MB of data.', 
+      // TODO:message: 'Do you want send your data now? \nData: '+(sizeof(self.symptoms)/1048576)+'MB',
       buttons: [
         {
           text: 'No',
@@ -111,8 +117,9 @@ export class Symptoms {
   finishedSymptoms() {
     console.log('Finished symptoms');
 
+    this.navCtrl.setRoot(Home);
+
     this.page.howfeeling = false;
     this.page.thanks = true;
   }
-
 }

@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { MyApp } from './app.component';
+import { Home } from '../pages/home/home';
 import { Symptoms } from '../pages/symptoms/symptoms';
 import { Data } from '../pages/data/data';
 import { Allergies } from '../pages/allergies/allergies';
@@ -14,6 +15,7 @@ import { Terms } from '../pages/login/terms';
 @NgModule({
   declarations: [
     MyApp,
+    Home,
     Symptoms,
     Data,
     Allergies,
@@ -29,6 +31,7 @@ import { Terms } from '../pages/login/terms';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    Home,
     Symptoms,
     Data,
     Allergies,
