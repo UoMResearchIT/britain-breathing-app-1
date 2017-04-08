@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.app842309" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Britain Breathing</name>
-  <description>Britain Breathing app.</description>
+  <name>BritainBreathing</name>
+  <description>BritainBreathingApp.</description>
   <author email="rob.dunne@manchester.ac.uk" href="http://manchester.ac.uk">University of Manchester</author>
   <content src="index.html"/>
   <access origin="*"/>
+  <access origin="https://storageconnect.manchester.ac.uk"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
@@ -79,4 +80,6 @@
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <allow-navigation href="http://192.168.0.3:8100"/>
+  <plugin name="cordova-sqlite-storage" spec="~2.0.1"/>
 </widget>

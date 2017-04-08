@@ -8,9 +8,72 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Settings</h3>
+  <h4 padding>Your settings</h4>
 
-  <p>
-      Lipsum...
-  </p>
+  <ion-list>
+    <ion-item>
+      <ion-label>Year of birth</ion-label>
+      <ion-select [(ngModel)]="registration.dob" (change)="saveSettings()">
+        <ion-option *ngFor="let item of allYears" value="{{item}}">{{item}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group [(ngModel)]="registration.gender" (change)="saveSettings()">
+    <ion-list-header>
+      Gender
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Male</ion-label>
+      <ion-radio checked="true" value="0"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Female</ion-label>
+      <ion-radio value="1"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      Allergy types
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Hayfever (pollen)</ion-label>
+      <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="1" (change)="saveSettings()"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Asthma</ion-label>
+      <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="1" (change)="saveSettings()"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Other allergy e.g. dust</ion-label>
+      <ion-checkbox [(ngModel)]="registration.allergies.other" value="1" (change)="saveSettings()"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Unknown allergy</ion-label>
+      <ion-checkbox [(ngModel)]="registration.allergies.unknown" value="1" (change)="saveSettings()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-input type="email" placeholder="email@address.com" [(ngModel)]="registration.email" (change)="saveSettings()"></ion-input>
+  </ion-item>
+
+  <p padding>Enable a daily reminder to complete your allergy information.</p>
+
+  <ion-item>
+    <ion-toggle id="alert-toggle" class="center" [(ngModel)]="registration.alert" color="secondary" checked="true" value="1" (change)="saveSettings()"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Select time:</ion-label>
+    <ion-datetime displayFormat="HH:mm" [(ngModel)]="registration.alerttime" (change)="saveSettings()"></ion-datetime>
+  </ion-item>
+
 </ion-content>

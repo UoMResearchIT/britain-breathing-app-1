@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Britain Breathing</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+
+    <ion-card-header>
+      Britain Breathing Home
+    </ion-card-header>
+
+    <ion-list>
+      <button ion-item [navPush]="symptoms">
+        <ion-icon name="medkit" item-left></ion-icon>
+        My symptoms
+      </button>
+
+      <button ion-item [navPush]="data">
+        <ion-icon name="analytics" item-left></ion-icon>
+        My data
+      </button>
+
+      <button ion-item [navPush]="about">
+        <ion-icon name="people" item-left></ion-icon>
+        About
+      </button>
+
+      <button ion-item [navPush]="settings">
+        <ion-icon name="settings" item-left></ion-icon>
+        Settings
+      </button>
+    </ion-list>
+  </ion-card>
+</ion-content>

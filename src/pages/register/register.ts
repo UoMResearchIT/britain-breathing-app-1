@@ -1,26 +1,28 @@
-import { Component } from '@angular/core';
-import { NavController, ModalController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, LoadingController, NavController, ModalController, ToastController, Slides } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { Symptoms } from '../symptoms/symptoms';
 import { Terms } from '../login/terms';
 
-import { SQLite } from 'ionic-native';
+import { Storage } from '@ionic/storage';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html'
 })
 export class Register {
-  public database: SQLite;
+  @ViewChild(Slides) slides: Slides;
 
   public registration = {
-    dob: '',
-    gender: '',
+    dob: 0,
+    gender: null,
     allergies: {
-      hayfever: 0,
-      asthma: 0,
-      other: 0,
-      unknown: 0
+      hayfever: false,
+      asthma: false,
+      other: false,
+      unknown: false
     },
     alert: 1,
     alerttime: '09:00',
@@ -31,10 +33,22 @@ export class Register {
 
   public allYears = [];
 
+  public terms = { 'notagreed': true };
+
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              private http: Http,
+              private storage: Storage,
+              public alertCtrl: AlertController,
+              public loadingCtrl: LoadingController
+            ) {
     this.addYears();
+    this.http = http;
+  }
+
+  ionViewDidLoad() {
+    this.slides.lockSwipes(true);
   }
 
   addYears() {
@@ -52,109 +66,125 @@ export class Register {
   }
 
   onboardingComplete() {
-    // Redirect to the symptoms page
-    this.navCtrl.setRoot(Symptoms);
+    // Show the loader
+    var loading = this.loadingCtrl.create({
+      content: 'Saving your details...'
+    });
+    loading.present();
 
-    // Create the local database
-    this.database = new SQLite();
-    this.database.openDatabase({
-      name: 'bbapp.db',
-      location: 'default'
-    }).then(() => {
-      // Create the config table
-      var configQuery = 'CREATE TABLE config(';
-          configQuery += 'ID int,';
-          configQuery += 'Terms int,';
-          configQuery += 'YearOfBirth int,';
-          configQuery += 'Gender int,';
-          configQuery += 'AllergyConsent int,';
-          configQuery += 'HayFever int,';
-          configQuery += 'Asthma int,';
-          configQuery += 'OtherAllergy int,';
-          configQuery += 'UnknownAllergy int,';
-          configQuery += 'Notifications int,';
-          configQuery += 'NotificationAlert varchar(5),';
-          configQuery += 'PromptForSubmit int,';
-          configQuery += 'BearerToken varchar(50),';
-          configQuery += 'Registered int,';
-          configQuery += 'Usercode varchar(64)';
-          configQuery += ')';
+    // Send data to the API
+    // Post the registration details
+    this.storage.ready().then(() => {
+      this.storage.get('userdata').then((val) => {
+        var message = val;
 
-      this.database.executeSql(configQuery, {}).then(() => {
-        // Add the registration details
-        var insertReg = 'INSERT INTO config VALUES(';
-            insertReg += '1';
-            insertReg += this.registration.datasharing+',';
-            insertReg += this.registration.dob+',';
-            insertReg += this.registration.gender+',';
-            insertReg += 'true,';
-            insertReg += this.registration.allergies.hayfever+',';
-            insertReg += this.registration.allergies.asthma+',';
-            insertReg += this.registration.allergies.other+',';
-            insertReg += this.registration.allergies.unknown+',';
-            insertReg += this.registration.alert+',';
-            insertReg += '""'+this.registration.alerttime+'"",';
-            insertReg += this.registration.dataprompt+',';
-            insertReg += '""'+'"",';
-            insertReg += ',';
-            insertReg += '""'+localStorage.getItem('usercode')+'"';
-            insertReg += ')';
+        // If an email address has been added, add them to the mailing list
+        var email = this.registration.email;
+        if(email.length > 0) {
+          message.emailaddress = this.registration.email;
+        } else {
+          message.mailinglist = false;
+        }
 
-        // Show a message
-        var toast = this.toastCtrl.create({
-          message: 'Registration details saved',
-          duration: 3000,
-          position: 'bottom'
-        });
+        var messageString = JSON.stringify(message);
+        //console.log(messageString);
 
-        toast.onDidDismiss(() => {
-          console.log('Dismissed toast');
-        });
-
-        toast.present();
-
-        // Send data to the API
-        /*** TODO: NEED TO CLARFY THE END POINT FOR THIS DATA
-        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var baseURL = 'https://storageconnect.manchester.ac.uk';
+        var apiURL = baseURL+'/api/v1/register/';
+        var headers = new Headers({'Content-Type': 'application/json'});
         var options = new RequestOptions({ headers: headers });
 
-        this.http.post(apiURL, messageString, options).subscribe(data => {
-            // callback
-            }
+        // Save the registration data
+        this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
+            // Registration successful, save the relevant details
+            loading.dismiss();
+
+            //var userInfo = JSON.stringify(data.Details).split(':');
+            var userInfo = data.Details;
+            userInfo = userInfo.split(':');
+            var bearerToken = userInfo[0];
+            var userCode = userInfo[1];
+            var deviceID = userInfo[2];
+
+            // Verify the registration
+            var apiURL = baseURL+'/api/v1/regverify/';
+            var headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Bearer '+bearerToken});
+            var options = new RequestOptions({ headers: headers });
+            var message = {
+              "deviceid": deviceID,
+              "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
+              "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+              "eot": true
+            };
+            var messageString = JSON.stringify(message);
+
+            this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
+              this.storage.ready().then(() => {
+                // Redirect to the symptoms page
+                this.navCtrl.setRoot(Symptoms);
+
+                // Save the user details
+                this.storage.set('bearerToken', bearerToken);
+                this.storage.set('userID', userCode);
+                this.storage.set('deviceID', deviceID);
+                this.storage.set('config', this.registration);
+
+                // Display success message
+                var toast = this.toastCtrl.create({
+                  message: 'Registration details saved',
+                  duration: 5000,
+                  position: 'bottom'
+                });
+                toast.onDidDismiss(() => {});
+                toast.present();
+              });
+            }, error => {
+                let alert = this.alertCtrl.create({
+                  title: 'Registration Verify Error',
+                  subTitle: 'An error occurred registering your details. You may need to close the app and start again. Details: '+error.Message,
+                  buttons: ['OK']
+                });
+                alert.present();
+            });
         }, error => {
-            //console.log(error);
-
+            loading.dismiss();
+            let alert = this.alertCtrl.create({
+              title: 'Registration Error',
+              subTitle: 'An error occurred registering your details. You may need to close the app and start again. Details: '+error.Message,
+              buttons: ['OK']
+            });
+            alert.present();
         });
-        ****/
-
-        // TODO: Update the settings page
-
-
-      }, (err) => {
-        console.error('Unable to execute sql: ', err);
       });
-
-      // Create the symptoms table
-      var symptomsQuery = 'CREATE TABLE symptoms(';
-      symptomsQuery += 'ID int,';
-      symptomsQuery += 'Uploaded int,';
-      symptomsQuery += 'SymptomDate datetime,';
-      symptomsQuery += 'Latitude float,';
-      symptomsQuery += 'Longitude float,';
-      symptomsQuery += 'Nose int,';
-      symptomsQuery += 'Breathing int,';
-      symptomsQuery += 'Eyes int,';
-      symptomsQuery += 'TakenMeds int';
-      symptomsQuery += ')';
-
-    }, (err) => {
-      console.error('Unable to open database: ', err);
     });
   }
 
   termsModal() {
     let modal = this.modalCtrl.create(Terms);
     modal.present();
+  }
+
+  termsAgreed() {
+    if(!this.registration.datasharing) {
+      let alert = this.alertCtrl.create({
+        title: 'Terms & Conditions',
+        subTitle: 'You must agree to data sharing and the terms and condtions to use this app.',
+        buttons: ['OK']
+      });
+      alert.present();
+
+      // Hide the 'next' link
+      this.terms.notagreed = true;
+    } else {
+      // Show the 'next' link
+      this.terms.notagreed = false;
+    }
+  }
+
+  nextSlide() {
+    this.slides.lockSwipes(false);
+    this.slides.slideNext(500);
+    this.slides.lockSwipes(true);
   }
 
 }

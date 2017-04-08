@@ -2,22 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
+import { Home } from '../pages/home/home';
 import { Symptoms } from '../pages/symptoms/symptoms';
 import { Data } from '../pages/data/data';
-import { Allergies } from '../pages/allergies/allergies';
-import { Contact } from '../pages/contact/contact';
+import { About } from '../pages/about/about';
 import { Settings } from '../pages/settings/settings';
-//import { Register } from '../pages/register/register';
 import { Login } from '../pages/login/login';
-//import { Terms } from '../pages/login/terms';
-
-// Check if already registered
-var startPage;
-if(localStorage.getItem('userID')) {
-  startPage = Symptoms;
-} else {
-  startPage = Login;
-}
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +16,7 @@ if(localStorage.getItem('userID')) {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = startPage;
+  rootPage: any = Login;
 
   pages: Array<{title: string, component: any}>;
 
@@ -36,10 +26,10 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
+      { title: 'Home', component: Home },
       { title: 'My Symptoms', component: Symptoms },
       { title: 'My Data', component: Data },
-      { title: 'About Allergies', component: Allergies },
-      { title: 'Contact Us', component: Contact },
+      { title: 'About', component: About },
       { title: 'Settings', component: Settings }
     ];
 

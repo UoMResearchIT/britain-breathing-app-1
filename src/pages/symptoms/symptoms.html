@@ -24,31 +24,31 @@
   <div [hidden]="page.symptoms">
     <h2 padding>How are your allergies affecting you?</h2>
 
-    <p padding>Nose <span class="symptom-rating">Rating: {{symptoms.nose}}</span></p>
+    <p padding>Nose <span class="symptom-rating">Rating: {{symptoms.rating[symptoms.nose]}}</span></p>
     <ion-item>
-      <ion-range [(ngModel)]="symptoms.nose" color="secondary" min="0" max="2" step="1" snaps="true">
+      <ion-range [(ngModel)]="symptoms.nose" color="secondary" min="0" max="3" step="1" snaps="true">
         <ion-label range-left>0</ion-label>
-        <ion-label range-right>2</ion-label>
+        <ion-label range-right>3</ion-label>
       </ion-range>
     </ion-item>
 
-    <p padding>Breathing <span class="symptom-rating">Rating: {{symptoms.breathing}}</span></p>
+    <p padding>Breathing <span class="symptom-rating">Rating: {{symptoms.rating[symptoms.breathing]}}</span></p>
     <ion-item>
-      <ion-range [(ngModel)]="symptoms.breathing" color="secondary" min="0" max="2" step="1" snaps="true">
+      <ion-range [(ngModel)]="symptoms.breathing" color="secondary" min="0" max="3" step="1" snaps="true">
         <ion-label range-left>0</ion-label>
-        <ion-label range-right>2</ion-label>
+        <ion-label range-right>3</ion-label>
       </ion-range>
     </ion-item>
 
-    <p padding>Eyes <span class="symptom-rating">Rating: {{symptoms.eyes}}</span></p>
+    <p padding>Eyes <span class="symptom-rating">Rating: {{symptoms.rating[symptoms.eyes]}}</span></p>
     <ion-item>
-      <ion-range [(ngModel)]="symptoms.eyes" color="secondary" min="0" max="2" step="1" snaps="true">
+      <ion-range [(ngModel)]="symptoms.eyes" color="secondary" min="0" max="3" step="1" snaps="true">
         <ion-label range-left>0</ion-label>
-        <ion-label range-right>2</ion-label>
+        <ion-label range-right>3</ion-label>
       </ion-range>
     </ion-item>
 
-    <button padding ion-button full round (click)="submitSymptoms()">Submit data</button>
+    <button padding ion-button full round (click)="processSymptoms()">Submit data</button>
   </div>
 
   <div [hidden]="page.thanks" id="symptoms-thanks">

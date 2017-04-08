@@ -24,4 +24,12 @@ page-register {
   .swiper-pagination {
     display: block!important;
   }
+
+  .symptoms-slider-header {
+    display: block;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }

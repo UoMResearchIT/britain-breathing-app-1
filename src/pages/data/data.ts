@@ -1,28 +1,44 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
-import { NavController } from 'ionic-angular';
-
-import c3 from 'c3';
+import { Chart } from 'chart.js';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'page-data',
   templateUrl: 'data.html'
 })
 export class Data {
+  @ViewChild('nosechart') nosechart;
+  @ViewChild('eyeschart') eyeschart;
+  @ViewChild('breathingchart') breathingchart;
+  @ViewChild('howimdoingchart') howimdoingchart;
+
+  lineChart: any;
+
   public chartSelection = 'nose';
 
   public chart = {
     nose: false,
-    eyes: true,
-    breathing: true,
-    howimdoing: true
+    eyes: false,
+    breathing: false,
+    howimdoing: false
   };
 
-  constructor(public navCtrl: NavController) {
-    var self = this;
-    setTimeout(function() {
-      self.loadCharts();
-    },1000);
+  public noseLoading = 'Loading...';
+  public eyesLoading = 'Loading...';
+  public breathingLoading = 'Loading...';
+  public allLoading = 'Loading...';
+
+  constructor(public navCtrl: NavController,
+              public alertCtrl: AlertController,
+              private storage: Storage) {
+
+  }
+
+  ionViewDidLoad() {
+    this.loadCharts();
   }
 
   showChart(selection) {
@@ -62,133 +78,124 @@ export class Data {
         this.chart.howimdoing = true;
         console.log('default');
     }
+
+    //this.loadCharts();
   }
 
   loadCharts() {
     console.log('Loading charts...');
 
-    c3.generate({
-      bindto: '#nosechart',
-      padding: {
-        top: 20,
-        right: 30
-      },
-      data: {
-        x: 'x', // xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-        columns: [
-              ['x', '2017-04-01', '2017-04-02', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
-              ['Rating', 1, 0, 2, 0, 1, 2]
-            ]
-          },
-          axis: {
-              x: {
-                  type: 'timeseries',
-                  tick: {
-                      format: '%Y-%m-%d'
-                  }
-              },
-              y: {
-                  max: 2,
-                  min: 0,
-                  padding: {top:10, bottom:0},
-                  tick: {
-                      format: d3.format('d')
-                  }
-              }
-          }
-      });
+    // Get the data
+    var self = this;
+    this.storage.ready().then(() => {
+      this.storage.get('graphdata').then((val) => {
+          var graphData = val;
 
-  c3.generate({
-    bindto: '#eyeschart',
-    padding: {
-      top: 20,
-      right: 30
-    },
-    data: {
-      x: 'x', // xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-      columns: [
-          ['x', '2017-04-01', '2017-04-02', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
-          ['Rating', 0, 0, 2, 1, 1, 0]
-          ]
-        },
-        axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    format: '%Y-%m-%d'
-                }
-            },
-            y: {
-                max: 2,
-                min: 0,
-                padding: {top:10, bottom:0},
-                tick: {
-                    format: d3.format('d')
-                }
+          // Process the data
+          var noseRatings = ['Rating'];
+          var eyesRatings = ['Rating'];
+          var breathingRatings = ['Rating'];
+          var allRatings = ['Rating'];
+          var chartDates = ['Date'];
+
+          for(var key in graphData) {
+            if(graphData.hasOwnProperty(key)) {
+              // Date
+              var t = moment.tz(graphData[key].readingDate, "Europe/London");
+              var date = t.format("MM-DD");
+              chartDates.push(date);
+
+              // Nose ratings
+              noseRatings.push(graphData[key].nose);
+
+              // Eyes ratings
+              eyesRatings.push(graphData[key].eyes);
+
+              // Breathing ratings
+              breathingRatings.push(graphData[key].breathing);
+
+              // All ratings
+              allRatings.push((graphData[key].nose+graphData[key].eyes+graphData[key].breathing));
             }
-        }
-    });
-
-  c3.generate({
-    bindto: '#breathingchart',
-    padding: {
-      top: 20,
-      right: 30
-    },
-    data: {
-      x: 'x', // xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-      columns: [
-            ['x', '2017-04-01', '2017-04-02', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
-            ['Rating', 1, 2, 2, 0, 2, 2]
-          ]
-        },
-        axis: {
-            x: {
-                type: 'timeseries',
-                tick: {
-                    format: '%Y-%m-%d'
-                }
-            },
-            y: {
-                max: 2,
-                min: 0,
-                padding: {top:10, bottom:0},
-                tick: {
-                    format: d3.format('d')
-                }
-            }
-        }
-    });
-
-    c3.generate({
-      bindto: '#howimdoingchart',
-      padding: {
-          top: 20,
-          right: 30
-      },
-      data: {
-        x: 'x', // xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-        columns: [
-            ['x', '2017-04-01', '2017-04-02', '2017-04-03', '2017-04-04', '2017-04-05', '2017-04-06', '2017-04-07'],
-            ['Rating', 2, 0, 0, 0, 1, 1]
-            ]
-          },
-          axis: {
-              x: {
-                  type: 'timeseries',
-                  tick: {
-                      format: '%Y-%m-%d'
-                  }
-              },
-              y: {
-                  max: 2,
-                  min: 0,
-                  padding: {top:10, bottom:0},
-                  tick: {
-                      format: d3.format('d')
-                  }
-              }
           }
+
+          // Draw the nose graph
+          if(noseRatings.length > 1) {
+            this.plotChart(self.nosechart.nativeElement, chartDates, noseRatings);
+            this.noseLoading = 'Ratings for nose symptoms';
+          } else {
+            // Show the no data message
+            this.noseLoading = 'No data to display.';
+          }
+
+          // Draw the eyes graph
+          if(eyesRatings.length > 1) {
+            this.plotChart(self.eyeschart.nativeElement, chartDates, eyesRatings);
+            this.eyesLoading = 'Ratings for eyes symptoms';
+          } else {
+            // Show the no data message
+            this.eyesLoading = 'No data to display.';
+          }
+
+          // Draw the breathing graph
+          if(breathingRatings.length > 1) {
+            this.plotChart(self.breathingchart.nativeElement, chartDates, breathingRatings);
+            this.breathingLoading = 'Ratings for breathing symptoms';
+          } else {
+            // Show the no data message
+            this.breathingLoading = 'No data to display.';
+          }
+
+          // Draw the howimdoing graph
+          if(allRatings.length > 1) {
+            this.plotChart(self.howimdoingchart.nativeElement, chartDates, allRatings);
+            this.allLoading = 'Ratings for all symptoms';
+          } else {
+            // Show the no data message
+            this.allLoading = 'No data to display.';
+          }
+
+          setTimeout(function() {
+            self.chart.nose = false;
+            self.chart.eyes = true;
+            self.chart.breathing = true;
+            self.chart.howimdoing = true;
+          },500);
+        });
       });
-  }
+    }
+
+    plotChart(chartID, chartDates, chartRatings) {
+      this.lineChart = new Chart(chartID, {
+            type: 'line',
+            data: {
+                labels: chartDates,
+                datasets: [
+                    {
+                        label: "Rating",
+                        fill: true,
+                        strokeLineWidth: 5,
+                        lineTension: 0.1,
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        borderColor: "rgba(75,192,192,1)",
+                        borderCapStyle: 'butt',
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        borderJoinStyle: 'miter',
+                        pointBorderColor: "rgba(75,192,192,1)",
+                        pointBackgroundColor: "#fff",
+                        pointBorderWidth: 3,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                        pointHoverBorderColor: "rgba(220,220,220,1)",
+                        pointHoverBorderWidth: 2,
+                        pointRadius: 10,
+                        pointHitRadius: 20,
+                        data: chartRatings,
+                        spanGaps: false,
+                    }
+                ]
+            }
+        });
+    }
 }
