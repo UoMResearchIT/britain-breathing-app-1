@@ -127,7 +127,7 @@ export class Symptoms {
                   "allergyConsent": true,
                   "hayFever": userdata.allergies.hayfever,
                   "asthma": userdata.allergies.asthma,
-                  "otherAllergy": userdata.allergies.other,
+                  "otherAllegy": userdata.allergies.other,
                   "unknownAllergy": userdata.allergies.unknown,
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,

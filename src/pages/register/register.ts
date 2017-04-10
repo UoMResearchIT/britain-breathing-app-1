@@ -85,6 +85,7 @@ export class Register {
         var email = this.registration.email;
         if(email.length > 0) {
           message.emailaddress = this.registration.email;
+          message.mailinglist = true;
         } else {
           message.mailinglist = false;
         }
@@ -146,18 +147,19 @@ export class Register {
                   var alerttime = this.registration.alerttime;
                   var hoursminutes = alerttime.split(':');
                   var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-                  tomorrow.setHours(Number(alerttime[0]));
-                  tomorrow.setMinutes(Number(alerttime[1]));
+                  tomorrow.setHours(Number(hoursminutes[0]));
+                  tomorrow.setMinutes(Number(hoursminutes[1]));
                   tomorrow.setSeconds(0);
 
                   // Clear any previously set notification
-                  this.localNotifications.cancelAll();
-
-                  this.localNotifications.schedule({
-                    id: 1,
-                    text: 'Please log your symptoms for today.',
-                    every: 'day',
-                    at: tomorrow
+                  this.localNotifications.cancelAll().then(() => {
+                    // Set the notification
+                    this.localNotifications.schedule({
+                      id: 1,
+                      text: 'Please log your symptoms for today.',
+                      every: 'day',
+                      at: tomorrow
+                    });
                   });
                 }
               });

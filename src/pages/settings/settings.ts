@@ -94,6 +94,7 @@ export class Settings {
 
                if(email.length == 0) {
                  // Remove from the mailing list if no email
+                 message.emailaddress = 'removed';
                  message.setting = false;
                }
 
@@ -108,7 +109,7 @@ export class Settings {
                  // email updated
                  let alert = this.alertCtrl.create({
                    title: 'Mailing List',
-                   subTitle: 'Your details have been updated.',
+                   subTitle: 'Your details have been updated. '+data.Message,
                    buttons: ['OK']
                  });
                  alert.present();
@@ -116,7 +117,7 @@ export class Settings {
                  // update failed
                  let alert = this.alertCtrl.create({
                    title: 'Mailing List Error',
-                   subTitle: 'An error occurred updating your mailing list settings. Details: '+error.Code,
+                   subTitle: 'An error occurred updating your mailing list settings. Details: '+JSON.stringify(error),
                    buttons: ['OK']
                  });
                  alert.present();
@@ -131,22 +132,23 @@ export class Settings {
        var alerttime = this.registration.alerttime;
        var hoursminutes = alerttime.split(':');
        var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-       tomorrow.setHours(Number(alerttime[0]));
-       tomorrow.setMinutes(Number(alerttime[1]));
+       tomorrow.setHours(Number(hoursminutes[0]));
+       tomorrow.setMinutes(Number(hoursminutes[1]));
        tomorrow.setSeconds(0);
 
        // Clear any previously set notification
-       this.localNotifications.cancelAll();
-
-       this.localNotifications.schedule({
-         id: 1,
-         text: 'Please log your symptoms for today.',
-         every: 'day',
-         at: tomorrow
+       this.localNotifications.cancelAll().then(() => {
+         // Set the notification
+         this.localNotifications.schedule({
+           id: 1,
+           text: 'Please log your symptoms for today.',
+           every: 'day',
+           at: tomorrow
+         });
        });
      } else {
        // Delete the notification
-       this.localNotifications.cancelAll();
+       this.localNotifications.cancelAll().then(() => {});
      }
   }
 

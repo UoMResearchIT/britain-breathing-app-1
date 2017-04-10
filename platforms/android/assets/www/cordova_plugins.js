@@ -273,7 +273,6 @@ module.exports.metadata =
     "cordova-plugin-http": "1.2.0",
     "cordova-plugin-geolocation": "2.4.2",
     "cordova-plugin-whitelist": "1.3.0",
-    "cordova-plugin-console": "1.0.4",
     "cordova-plugin-statusbar": "2.2.0",
     "cordova-plugin-device": "1.1.3",
     "ionic-plugin-keyboard": "2.2.1",
