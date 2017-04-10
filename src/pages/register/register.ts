@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, LoadingController, NavController, ModalController, ToastController, Slides } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { Symptoms } from '../symptoms/symptoms';
 import { Terms } from '../login/terms';
@@ -10,7 +11,8 @@ import 'rxjs/Rx';
 
 @Component({
   selector: 'page-register',
-  templateUrl: 'register.html'
+  templateUrl: 'register.html',
+  providers: [LocalNotifications]
 })
 export class Register {
   @ViewChild(Slides) slides: Slides;
@@ -41,7 +43,8 @@ export class Register {
               private http: Http,
               private storage: Storage,
               public alertCtrl: AlertController,
-              public loadingCtrl: LoadingController
+              public loadingCtrl: LoadingController,
+              private localNotifications: LocalNotifications
             ) {
     this.addYears();
     this.http = http;
@@ -113,7 +116,7 @@ export class Register {
             var message = {
               "deviceid": deviceID,
               "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-              "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+              "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
               "eot": true
             };
             var messageString = JSON.stringify(message);
@@ -137,6 +140,26 @@ export class Register {
                 });
                 toast.onDidDismiss(() => {});
                 toast.present();
+
+                // Save the notification
+                if(this.registration.alert == 1) {
+                  var alerttime = this.registration.alerttime;
+                  var hoursminutes = alerttime.split(':');
+                  var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+                  tomorrow.setHours(Number(alerttime[0]));
+                  tomorrow.setMinutes(Number(alerttime[1]));
+                  tomorrow.setSeconds(0);
+
+                  // Clear any previously set notification
+                  this.localNotifications.cancelAll();
+
+                  this.localNotifications.schedule({
+                    id: 1,
+                    text: 'Please log your symptoms for today.',
+                    every: 'day',
+                    at: tomorrow
+                  });
+                }
               });
             }, error => {
                 let alert = this.alertCtrl.create({

@@ -102,7 +102,7 @@ export class Data {
             if(graphData.hasOwnProperty(key)) {
               // Date
               var t = moment.tz(graphData[key].readingDate, "Europe/London");
-              var date = t.format("MM-DD");
+              var date = t.format("DD-MM");
               chartDates.push(date);
 
               // Nose ratings
@@ -115,7 +115,14 @@ export class Data {
               breathingRatings.push(graphData[key].breathing);
 
               // All ratings
-              allRatings.push((graphData[key].nose+graphData[key].eyes+graphData[key].breathing));
+              var ratingAverage = 0;
+              if(graphData[key].nose > 0) { ratingAverage += graphData[key].nose}
+              if(graphData[key].eyes > 0) { ratingAverage += graphData[key].eyes}
+              if(graphData[key].breathing > 0) { ratingAverage += graphData[key].breathing}
+              ratingAverage = ratingAverage/3;
+              ratingAverage = Math.round(ratingAverage*10)/10;
+
+              allRatings.push(ratingAverage.toString());
             }
           }
 
@@ -149,7 +156,7 @@ export class Data {
           // Draw the howimdoing graph
           if(allRatings.length > 1) {
             this.plotChart(self.howimdoingchart.nativeElement, chartDates, allRatings);
-            this.allLoading = 'Ratings for all symptoms';
+            this.allLoading = 'Average rating for all symptoms';
           } else {
             // Show the no data message
             this.allLoading = 'No data to display.';
@@ -166,6 +173,13 @@ export class Data {
     }
 
     plotChart(chartID, chartDates, chartRatings) {
+      // Limit to 14 records
+      if(chartDates.length > 14) {
+        chartDates = chartDates.slice(Math.max(chartDates.length - 14, 1));
+        chartRatings = chartRatings.slice(Math.max(chartRatings.length - 14, 1));
+      }
+
+      // Make the chart
       this.lineChart = new Chart(chartID, {
             type: 'line',
             data: {
@@ -176,20 +190,20 @@ export class Data {
                         fill: true,
                         strokeLineWidth: 5,
                         lineTension: 0.1,
-                        backgroundColor: "rgba(75,192,192,0.4)",
+                        backgroundColor: "rgba(0,159,227,1)",
                         borderColor: "rgba(75,192,192,1)",
                         borderCapStyle: 'butt',
                         borderDash: [],
                         borderDashOffset: 0.0,
                         borderJoinStyle: 'miter',
-                        pointBorderColor: "rgba(75,192,192,1)",
+                        pointBorderColor: "rgba(0,159,227,1)",
                         pointBackgroundColor: "#fff",
                         pointBorderWidth: 3,
-                        pointHoverRadius: 5,
+                        pointHoverRadius: 3,
                         pointHoverBackgroundColor: "rgba(75,192,192,1)",
                         pointHoverBorderColor: "rgba(220,220,220,1)",
                         pointHoverBorderWidth: 2,
-                        pointRadius: 10,
+                        pointRadius: 4,
                         pointHitRadius: 20,
                         data: chartRatings,
                         spanGaps: false,

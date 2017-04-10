@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
@@ -37,7 +37,8 @@ export class Symptoms {
               public alertCtrl: AlertController,
               private http: Http,
               public geo: Geolocation,
-              private storage: Storage
+              private storage: Storage,
+              public loadingCtrl: LoadingController
               ) {
     this.http = http;
   }
@@ -78,6 +79,12 @@ export class Symptoms {
   }
 
   processSymptoms() {
+    var loading = this.loadingCtrl.create({
+      content: 'Sending data...',
+      dismissOnPageChange: false
+    });
+    loading.present();
+
     var self = this;
 
     this.storage.ready().then(() => {
@@ -109,7 +116,7 @@ export class Symptoms {
 
               var message = {
                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+                "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
                 "deviceid": deviceID,
                 "datapacket": {
                   "readingDate": this.symptoms.datetime,
@@ -140,6 +147,7 @@ export class Symptoms {
                 // Success
                 if(data.Code < 200) {
                   // Show the thanks page
+                  loading.dismiss();
                   self.page.thanks = false;
                   self.page.symptoms = true;
 
@@ -158,6 +166,7 @@ export class Symptoms {
                     this.storage.set('graphdata', graphData);
                   });
                 } else {
+                  loading.dismiss();
                   let alert = this.alertCtrl.create({
                     title: 'Error Sending Data',
                     subTitle: data.Message,
@@ -168,6 +177,7 @@ export class Symptoms {
 
               }, error => {
                   // Something went wrong
+                  loading.dismiss();
                   let alert = this.alertCtrl.create({
                     title: 'Error Sending Data',
                     subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
@@ -177,6 +187,7 @@ export class Symptoms {
               });
             }).catch((error) => {
               //console.log('Error getting location', error);
+              loading.dismiss();
             });
           });
         });

@@ -51,6 +51,10 @@
                         {
                             "xml": "<feature name=\"CordovaHttpPlugin\"><param name=\"ios-package\" value=\"CordovaHttpPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"LocalNotification\"><param name=\"ios-package\" onload=\"true\" value=\"APPLocalNotification\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -100,6 +104,12 @@
             "PACKAGE_NAME": "com.ionicframework.app842309"
         },
         "cordova-plugin-http": {
+            "PACKAGE_NAME": "com.ionicframework.app842309"
+        },
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ionicframework.app842309"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.app842309"
         }
     },
@@ -374,6 +384,33 @@
             "clobbers": [
                 "CordovaHttpPlugin"
             ]
+        },
+        {
+            "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
+            "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
+            "pluginId": "de.appplant.cordova.plugin.local-notification",
+            "clobbers": [
+                "cordova.plugins.notification.local",
+                "plugin.notification.local"
+            ]
+        },
+        {
+            "id": "de.appplant.cordova.plugin.local-notification.LocalNotification.Core",
+            "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification-core.js",
+            "pluginId": "de.appplant.cordova.plugin.local-notification",
+            "clobbers": [
+                "cordova.plugins.notification.local.core",
+                "plugin.notification.local.core"
+            ]
+        },
+        {
+            "id": "de.appplant.cordova.plugin.local-notification.LocalNotification.Util",
+            "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification-util.js",
+            "pluginId": "de.appplant.cordova.plugin.local-notification",
+            "merges": [
+                "cordova.plugins.notification.local.core",
+                "plugin.notification.local.core"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -387,6 +424,8 @@
         "cordova-sqlite-storage": "2.0.1",
         "ionic-plugin-keyboard": "2.2.1",
         "cordova-plugin-file": "4.3.2",
-        "cordova-plugin-http": "1.2.0"
+        "cordova-plugin-http": "1.2.0",
+        "cordova-plugin-app-event": "1.2.0",
+        "de.appplant.cordova.plugin.local-notification": "0.8.4"
     }
 }

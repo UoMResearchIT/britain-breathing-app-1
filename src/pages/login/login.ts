@@ -163,7 +163,7 @@ export class Login {
     var base64Credentials = window.btoa(hashedUC+':'+this.login.password);
     var message = {
       "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-      "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+      "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
       "credentials": base64Credentials,
       "useragent": navigator.userAgent,
       "eot": true
@@ -217,7 +217,7 @@ export class Login {
                   var message = {
                     "deviceid": deviceID,
                     "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                    "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+                    "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
                     "eot": true
                   };
                   var messageString = JSON.stringify(message);
@@ -266,7 +266,7 @@ export class Login {
                   var message = {
                     "deviceid": deviceID,
                     "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                    "studyid": "172ca793-9cab-4343-84fa-bf730f7a6693",
+                    "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
                     "eot": true
                   };
                   var messageString = JSON.stringify(message);

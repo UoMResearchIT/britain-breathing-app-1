@@ -8,6 +8,7 @@
     <author email="rob.dunne@manchester.ac.uk" href="http://manchester.ac.uk">University of Manchester</author>
     <content src="index.html" />
     <access origin="*" />
+    <access origin="https://storageconnect.manchester.ac.uk" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

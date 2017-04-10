@@ -45,10 +45,14 @@
     <feature name="CordovaHttpPlugin">
         <param name="ios-package" value="CordovaHttpPlugin" />
     </feature>
+    <feature name="LocalNotification">
+        <param name="ios-package" onload="true" value="APPLocalNotification" />
+        <param name="onload" value="true" />
+    </feature>
     <name>BritainBreathing</name>
     <description>BritainBreathingApp.</description>
     <author email="rob.dunne@manchester.ac.uk" href="http://manchester.ac.uk">University of Manchester</author>
-    <content original-src="index.html" src="http://192.168.0.3:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access origin="https://storageconnect.manchester.ac.uk" />
     <allow-intent href="http://*/*" />

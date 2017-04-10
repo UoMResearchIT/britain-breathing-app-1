@@ -1,18 +1,23 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
-
+import { AlertController, ViewController } from 'ionic-angular';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 @Component({
   selector: 'page-settings',
-  templateUrl: 'settings.html'
+  templateUrl: 'settings.html',
+    providers: [LocalNotifications]
 })
 
 export class Settings {
   constructor(public viewCtrl: ViewController,
-              private storage: Storage) {
+              private storage: Storage,
+              public alertCtrl: AlertController,
+              private http: Http,
+              private localNotifications: LocalNotifications) {
                 this.addYears();
-                this.getUserDetails();
+                this.http = http;
               }
 
   // User vars
@@ -32,6 +37,10 @@ export class Settings {
     dataprompt: 0,
     email: ''
   };
+
+  ionViewDidLoad() {
+    this.getUserDetails();
+  }
 
   // Get the saved registration data
   getUserDetails() {
@@ -60,13 +69,85 @@ export class Settings {
     //console.log(this.allYears);
   }
 
-  saveSettings() {
-    setTimeout(function() {
-      this.storage.ready().then(() => {
-         // Save settings
-         this.storage.set('config', this.registration);
-       },500);
+  saveSettings(updateEmail) {
+    var email = this.registration.email;
+    var bearerToken;
+    var deviceID;
+
+    // Save the settings
+    this.storage.ready().then(() => {
+       // Save settings
+       this.storage.set('config', this.registration);
+
+       if(updateEmail === true) {
+        this.storage.get('bearerToken').then((val) => { bearerToken = val;
+          this.storage.get('deviceID').then((val) => { deviceID = val;
+             // Send the updated email to the API
+               var message = {
+                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
+                 "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+                 "deviceid": deviceID,
+                 "emailaddress": email,
+                 "setting": true,
+                 "eot":true
+                };
+
+               if(email.length == 0) {
+                 // Remove from the mailing list if no email
+                 message.setting = false;
+               }
+
+               var baseURL = 'https://storageconnect.manchester.ac.uk';
+               var apiURL = baseURL+'/api/v1/mailinglistflag/';
+               var headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Bearer '+bearerToken});
+               var options = new RequestOptions({ headers: headers });
+               var messageString = JSON.stringify(message);
+
+               // Save the email update
+               this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
+                 // email updated
+                 let alert = this.alertCtrl.create({
+                   title: 'Mailing List',
+                   subTitle: 'Your details have been updated.',
+                   buttons: ['OK']
+                 });
+                 alert.present();
+               }, error => {
+                 // update failed
+                 let alert = this.alertCtrl.create({
+                   title: 'Mailing List Error',
+                   subTitle: 'An error occurred updating your mailing list settings. Details: '+error.Code,
+                   buttons: ['OK']
+                 });
+                 alert.present();
+               });
+             });
+           });
+         }
      });
+
+     // Update the Notification
+     if(this.registration.alert == 1) {
+       var alerttime = this.registration.alerttime;
+       var hoursminutes = alerttime.split(':');
+       var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+       tomorrow.setHours(Number(alerttime[0]));
+       tomorrow.setMinutes(Number(alerttime[1]));
+       tomorrow.setSeconds(0);
+
+       // Clear any previously set notification
+       this.localNotifications.cancelAll();
+
+       this.localNotifications.schedule({
+         id: 1,
+         text: 'Please log your symptoms for today.',
+         every: 'day',
+         at: tomorrow
+       });
+     } else {
+       // Delete the notification
+       this.localNotifications.cancelAll();
+     }
   }
 
   dismiss() {
