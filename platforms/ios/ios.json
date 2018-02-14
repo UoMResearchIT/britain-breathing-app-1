@@ -69,41 +69,41 @@
     },
     "installed_plugins": {
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-geolocation": {
             "GEOLOCATION_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-http": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         },
         "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.ionicframework.app842309"
+            "PACKAGE_NAME": "uk.ac.manchester.britainbreathing"
         }
     },
     "dependent_plugins": {},
