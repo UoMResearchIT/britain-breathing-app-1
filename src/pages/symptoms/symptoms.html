@@ -48,6 +48,14 @@
       </ion-range>
     </ion-item>
 
+    <p padding>Tiredness <span class="symptom-rating">Rating: {{symptoms.rating[symptoms.tiredness]}}</span></p>
+    <ion-item>
+      <ion-range [(ngModel)]="symptoms.tiredness" color="secondary" min="0" max="3" step="1" snaps="true">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>3</ion-label>
+      </ion-range>
+    </ion-item>
+
     <button padding ion-button full round (click)="processSymptoms()">Submit data</button>
   </div>
 

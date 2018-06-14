@@ -20,6 +20,7 @@ export class Symptoms {
     nose: 0,
     breathing: 0,
     eyes: 0,
+    tiredness: 0,
     meds: 0,
     datetime: '',
     lat: 0.0,
@@ -116,7 +117,7 @@ export class Symptoms {
 
               var message = {
                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+                "id": "cbb484fc-af61-4ca7-8082-0392257ea84c",
                 "deviceid": deviceID,
                 "datapacket": {
                   "readingDate": this.symptoms.datetime,
@@ -132,6 +133,7 @@ export class Symptoms {
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,
                   "eyes": this.symptoms.eyes,
+                  "tiredness":this.symptoms.tiredness,
                   "takenMedication": this.symptoms.meds
                 },
                   "eot":true
