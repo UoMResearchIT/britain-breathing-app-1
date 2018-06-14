@@ -25,6 +25,12 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Tiredness</ion-label>
+      <ion-radio value="tiredness" (click)="showChart('tiredness')"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+    <ion-item>
       <ion-label>How I'm Doing</ion-label>
       <ion-radio value="howimdoing" (click)="showChart('howimdoing')"></ion-radio>
     </ion-item>
@@ -45,6 +51,12 @@
   <div [hidden]="chart.breathing" id="chart-breathing">
     <div style="text-align:center;padding:0 20px 10px;">{{breathingLoading}}</div>
     <canvas padding #breathingchart width="480" height="300" style="margin:0 0 100px"></canvas>
+  </div>
+
+
+  <div [hidden]="chart.tiredness" id="chart-tiredness">
+    <div style="text-align:center;padding:0 20px 10px;">{{tirednessLoading}}</div>
+    <canvas padding #tirednesschart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
 
   <div [hidden]="chart.howimdoing" id="chart-howimdoing">
