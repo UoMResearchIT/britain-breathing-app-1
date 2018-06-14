@@ -3,10 +3,10 @@
 
 .DS_STORE
 
-.tmp/
-node_modules/
-plugins/
-platforms/
+.tmp/*
+node_modules/*
+plugins/*
+platforms/*
 
 .idea
 
