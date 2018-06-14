@@ -111,7 +111,6 @@ export class Data {
           var noseRatings = ['Rating'];
           var eyesRatings = ['Rating'];
           var breathingRatings = ['Rating'];
-          var tirednessRatings = ['Rating'];
           var allRatings = ['Rating'];
           var chartDates = ['Date'];
 
@@ -131,15 +130,11 @@ export class Data {
               // Breathing ratings
               breathingRatings.push(graphData[key].breathing);
 
-              // Tiredness ratings
-              tirednessRatings.push(graphData[key].tiredness);
-
               // All ratings
               var ratingAverage = 0;
               if(graphData[key].nose > 0) { ratingAverage += graphData[key].nose}
               if(graphData[key].eyes > 0) { ratingAverage += graphData[key].eyes}
               if(graphData[key].breathing > 0) { ratingAverage += graphData[key].breathing}
-              if(graphData[key].tiredness > 0) { ratingAverage += graphData[key].tiredness}
               ratingAverage = ratingAverage/3;
               ratingAverage = Math.round(ratingAverage*10)/10;
 
@@ -174,15 +169,6 @@ export class Data {
             this.breathingLoading = 'No data to display.';
           }
 
-        // Draw the tiredness graph
-        if(tirednessRatings.length > 1) {
-          this.plotChart(self.tirednesschart.nativeElement, chartDates, tirednessRatings);
-          this.tirednessLoading = 'Ratings for tiredness symptoms';
-        } else {
-          // Show the no data message
-          this.tirednessLoading = 'No data to display.';
-        }
-
           // Draw the howimdoing graph
           if(allRatings.length > 1) {
             this.plotChart(self.howimdoingchart.nativeElement, chartDates, allRatings);
@@ -196,7 +182,6 @@ export class Data {
             self.chart.nose = false;
             self.chart.eyes = true;
             self.chart.breathing = true;
-            self.chart.tiredness = true;
             self.chart.howimdoing = true;
           },500);
         });
