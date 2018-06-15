@@ -72,6 +72,33 @@ export class Symptoms {
     alert.present(alert);
   }
 
+
+  // user clicks "Great" says if they took medicine then returns to symptoms page. INCOMPLETE
+  symptomsNoPage(feeling){
+
+    // Confirm medication taken, then show allergy symptoms page
+    let alert = this.alertCtrl.create({
+      title: 'Please confirm:',
+      message: 'Have you taken your medication for allergies today?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('No clicked')
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Yes clicked');
+          }
+        }
+      ]
+    });
+    alert.present(alert);
+  }
+
   showSymptomsPage(meds) {
     this.symptoms.meds = meds;
 
