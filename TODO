@@ -1,0 +1,7 @@
+1) Record the data for the overall 'how are you feeling?’ If people select fine, that should be the end of it, rather than taking them through to the individual symptoms page.
+
+2) Record the time that people set the reminder notification.
+
+3) If it will fit on the screen, add a slider for tiredness. DONE (UI works but can't submit data)
+
+4) Change the symptoms graphs so they are like those in the CityVerve app.
