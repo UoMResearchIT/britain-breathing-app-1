@@ -163,7 +163,7 @@ export class Login {
     var base64Credentials = window.btoa(hashedUC+':'+this.login.password);
     var message = {
       "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-      "studyid": "cbb484fc-af61-4ca7-8082-0392257ea84c ",
+      "studyid": "cbb484fc-af61-4ca7-8082-0392257ea84c",
       "credentials": base64Credentials,
       "useragent": navigator.userAgent,
       "eot": true
