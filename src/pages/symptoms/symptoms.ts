@@ -159,8 +159,8 @@ export class Symptoms {
 
             // Update the location data
             this.geo.getCurrentPosition().then((resp) => {
-              this.symptoms.lat = Number((resp.coords.latitude));
-              this.symptoms.long = Number((resp.coords.longitude));
+              this.symptoms.lat = Number((resp.coords.latitude).toFixed(2));
+              this.symptoms.long = Number((resp.coords.longitude).toFixed(2));
 
               console.log('Location Data');
 
