@@ -45,7 +45,7 @@ export class Symptoms {
     this.http = http;
   }
 
-  symptomsPage(feeling) {
+  symptomsPage(howfeeling) {
     var self = this;
 
     // Confirm medication taken, then show allergy symptoms page
@@ -58,6 +58,7 @@ export class Symptoms {
           role: 'cancel',
           handler: () => {
             console.log('No clicked');
+            this.symptoms.howfeeling = howfeeling;
             self.showSymptomsPage(false);
           }
         },
@@ -65,6 +66,7 @@ export class Symptoms {
           text: 'Yes',
           handler: () => {
             console.log('Yes clicked');
+            this.symptoms.howfeeling = howfeeling;
             self.showSymptomsPage(true);
           }
         }
@@ -75,7 +77,7 @@ export class Symptoms {
 
 
   // user clicks "Great" says if they took medicine then returns to home page after passing default values to Storage Connect
-  symptomsNoPage(feeling){
+  symptomsNoPage(howfeeling){
 
     var self = this;
     // Confirm medication taken, then show allergy symptoms page
@@ -88,15 +90,15 @@ export class Symptoms {
           role: 'cancel',
           handler: () => {
             console.log('No clicked (No symptoms)');
+            this.symptoms.howfeeling = howfeeling;
             self.showNoSymptomsPage(false);
-            self.finishedSymptoms();
-            console.log('Default Symptoms Processed');
           },
         },
         {
           text: 'Yes',
           handler: () => {
             console.log('Yes clicked');
+            this.symptoms.howfeeling = howfeeling;
             self.showNoSymptomsPage(true);
             self.finishedSymptoms();
             console.log('Default Symptoms Processed');
@@ -179,6 +181,7 @@ export class Symptoms {
                   "asthma": userdata.allergies.asthma,
                   "otherAllegy": userdata.allergies.other,
                   "unknownAllergy": userdata.allergies.unknown,
+                  "homimdoing": this.symptoms.howfeeling,
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,
                   "eyes": this.symptoms.eyes,
@@ -211,6 +214,7 @@ export class Symptoms {
                       // First time, create the graph JSON first
                       var graphData = {}
                     }
+                    console.log(graphData);
                     console.log('Data Saved Locally for Graphing');
 
                     // Update with the new data
