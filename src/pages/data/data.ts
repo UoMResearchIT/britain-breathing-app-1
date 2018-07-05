@@ -71,10 +71,10 @@ export class Data {
       case 'nose':
         this.chart.nose = false;
         break;
-      case 'coughing':
+      case 'eyes':
         this.chart.eyes = false;
         break;
-      case 'mucus':
+      case 'breathing':
         this.chart.breathing = false;
         break;
       case 'tiredness':
@@ -96,13 +96,16 @@ export class Data {
     this.storage.ready().then(() => {
       this.storage.get('graphdata').then((val) => {
         var graphData = val;
-
+        console.log(graphData);
         // process data
         var noseRatings = ['Rating'];
+        console.log(noseRatings);
         var eyesRatings = ['Rating'];
+        console.log(eyesRatings);
         var breathingRatings = ['Rating'];
         var tirednessRatings = ['Rating'];
         var howimdoingRatings = ['Rating'];
+        console.log(howimdoingRatings);
         var chartDates = ['Date'];
 
         for (var key in graphData) {
@@ -118,14 +121,14 @@ export class Data {
             eyesRatings.push(graphData[key].eyes);
             breathingRatings.push(graphData[key].breathing);
             tirednessRatings.push(graphData[key].tiredness);
-            howimdoingRatings.push(graphData[key].howimdoing);
+            howimdoingRatings.push(graphData[key].homimdoing);
           }
         }
 
         // draw nose graph
         if (noseRatings.length > 1) {
           this.plotChart(self.nosechart.nativeElement, chartDates, noseRatings);
-          this.noseLoading = 'Ratings for nose symptoms';
+          this.noseLoading = 'Ratings for Nose symptoms';
         } else {
           this.noseLoading = 'No data to display.';
         }
@@ -133,7 +136,7 @@ export class Data {
         // draw eye graph
         if (eyesRatings.length > 1) {
           this.plotChart(self.eyeschart.nativeElement, chartDates, eyesRatings);
-          this.eyesLoading = 'Ratings for eye symptoms';
+          this.eyesLoading = 'Ratings for Eye symptoms';
         } else {
           this.eyesLoading = 'No data to display.';
         }
@@ -141,7 +144,7 @@ export class Data {
         // draw breathing graph
         if (breathingRatings.length > 1) {
           this.plotChart(self.breathingchart.nativeElement, chartDates, breathingRatings);
-          this.breathingLoading = 'Ratings for breathing symptoms';
+          this.breathingLoading = 'Ratings for Breathing symptoms';
         } else {
           this.breathingLoading = 'No data to display.';
         }
@@ -157,7 +160,8 @@ export class Data {
         // draw howimdoing graph
         if (howimdoingRatings.length > 1) {
           this.plotChart(self.howimdoingchart.nativeElement, chartDates, howimdoingRatings);
-          this.howimdoingLoading = 'Ratings for how I\'m doing';
+          console.log(howimdoingRatings);
+          this.howimdoingLoading = 'Ratings for "How Are You Feeling Today?" (0 = Great, 1 = So-so, 2 = Bad)';
         } else {
           this.howimdoingLoading = 'No data to display.';
         }
@@ -226,4 +230,3 @@ export class Data {
     //this.lineChart.update();
   }
 }
-

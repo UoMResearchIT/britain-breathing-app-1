@@ -17,7 +17,7 @@
       <ion-option value="eyes" id="!data-page-chart-selection-eyes">Eyes</ion-option>
       <ion-option value="breathing" id="!data-page-chart-selection-breathing">Breathing</ion-option>
       <ion-option value="tiredness" id="!data-page-chart-selection-tiredness">Tiredness</ion-option>
-      <ion-option value="howimdoing" id="!data-page-chart-selection-howimdoing">How I'm Doing</ion-option>
+      <ion-option value="howimdoing" id="!data-page-chart-selection-howimdoing">How I'm Feeling</ion-option>
     </ion-select>
   </ion-item>
   <br /><br />
@@ -35,7 +35,7 @@
   </div>
 
   <!-- mucus -->
-  <div [hidden]="chart.breathing" id="chart-mucus">
+  <div [hidden]="chart.breathing" id="chart-breathing">
     <div style="text-align:center;padding:0 20px 10px;">{{breathingLoading}}</div>
     <canvas padding #breathingchart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
