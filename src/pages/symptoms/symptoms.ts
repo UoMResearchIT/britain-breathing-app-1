@@ -41,7 +41,7 @@ export class Symptoms {
               public geo: Geolocation,
               private storage: Storage,
               public loadingCtrl: LoadingController
-              ) {
+  ) {
     this.http = http;
   }
 
@@ -179,9 +179,9 @@ export class Symptoms {
                   "allergyConsent": true,
                   "hayFever": userdata.allergies.hayfever,
                   "asthma": userdata.allergies.asthma,
-                  "otherAllegy": userdata.allergies.other,
+                  "otherAllergy": userdata.allergies.other,
                   "unknownAllergy": userdata.allergies.unknown,
-                  "homimdoing": this.symptoms.howfeeling,
+                  "howimdoing": this.symptoms.howfeeling,
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,
                   "eyes": this.symptoms.eyes,
@@ -234,14 +234,14 @@ export class Symptoms {
                 }
 
               }, error => {
-                  // Something went wrong
-                  loading.dismiss();
-                  let alert = this.alertCtrl.create({
-                    title: 'Error Sending Data',
-                    subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
-                    buttons: ['OK']
-                  });
-                  alert.present();
+                // Something went wrong
+                loading.dismiss();
+                let alert = this.alertCtrl.create({
+                  title: 'Error Sending Data',
+                  subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
+                  buttons: ['OK']
+                });
+                alert.present();
               });
             }).catch((error) => {
               //console.log('Error getting location', error);
