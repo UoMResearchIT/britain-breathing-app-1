@@ -82,6 +82,7 @@ export class Symptoms {
     var self = this;
     // Confirm medication taken, then show allergy symptoms page
     let alert = this.alertCtrl.create({
+
       title: 'Please confirm:',
       message: 'Have you taken your medication for allergies today?',
       buttons: [
@@ -92,6 +93,9 @@ export class Symptoms {
             console.log('No clicked (No symptoms)');
             this.symptoms.howfeeling = howfeeling;
             self.showNoSymptomsPage(false);
+            this.page.howfeeling = true;
+            self.page.thanks = false;
+            self.page.symptoms = true;
           },
         },
         {
@@ -100,7 +104,9 @@ export class Symptoms {
             console.log('Yes clicked');
             this.symptoms.howfeeling = howfeeling;
             self.showNoSymptomsPage(true);
-            self.finishedSymptoms();
+            this.page.howfeeling = true;
+            self.page.thanks = false;
+            self.page.symptoms = true;
             console.log('Default Symptoms Processed');
           }
         }
@@ -118,8 +124,6 @@ export class Symptoms {
   // Processes defualt values
   showNoSymptomsPage(meds) {
     this.symptoms.meds = meds;
-    this.page.howfeeling = false;
-    this.page.symptoms = false;
     this.processSymptoms()
   }
 
