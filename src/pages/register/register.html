@@ -2,11 +2,10 @@
   <ion-slides pager>
 
     <ion-slide padding>
-      <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
 
       <ion-icon name="contact" class="center"></ion-icon>
       <h2 padding>About You</h2>
-      <p padding>Please complete the following information, then swipe to continue.</p>
+      <p padding>Please complete the following information, then swipe or click "Next" to continue.</p>
 
       <ion-list>
         <ion-item>
@@ -32,6 +31,9 @@
           <ion-radio value="1"></ion-radio>
         </ion-item>
       </ion-list>
+
+      <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
+
     </ion-slide>
 
     <ion-slide padding>
@@ -84,7 +86,6 @@
         <ion-datetime displayFormat="HH:mm" [(ngModel)]="registration.alerttime"></ion-datetime>
       </ion-item>
     </ion-slide>
-    
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
 
@@ -103,7 +104,7 @@
 
       <ion-icon name="analytics" class="center"></ion-icon>
       <h2 padding>Data sharing</h2>
-      <p padding>Finally, just confirm you're happy to share the data.</p>
+      <p padding>Finally, confirm you're happy to share the data.</p>
 
       <div padding>
         <button ion-button full round (click)="termsModal()">Terms and Conditions</button>
