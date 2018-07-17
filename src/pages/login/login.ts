@@ -77,7 +77,7 @@ export class Login {
   validateUsercode() {
     if(this.login.usercode.length <= 4) {
       // Invalid usercode
-      this.login.error.message = 'Usercode must be at least 5 characters';
+      this.login.error.message = 'Username must be at least 5 characters';
       this.login.error.hide = false;
     } else {
       this.login.error.hide = true;
