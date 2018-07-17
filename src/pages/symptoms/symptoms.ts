@@ -178,6 +178,7 @@ export class Symptoms {
                 "deviceid": deviceID,
                 "datapacket": {
                   "readingDate": this.symptoms.datetime,
+                  "alerttime": userdata.alerttime,
                   "latitude": this.symptoms.lat,
                   "longitude": this.symptoms.long,
                   "gender": gender,
