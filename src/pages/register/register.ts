@@ -117,7 +117,7 @@ export class Register {
             var message = {
               "deviceid": deviceID,
               "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-              "studyid": "cbb484fc-af61-4ca7-8082-0392257ea84c",
+              "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
               "eot": true
             };
             var messageString = JSON.stringify(message);
