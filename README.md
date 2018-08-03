@@ -2,6 +2,13 @@
 
 [Britain Breathing](http://britainbreathing.org/) is mobile app that tracks user's allergies.
 
+2.0 Release
+
+* Record the data for the overall 'how are you feeling?’ If people select fine it takes them back to the homepage and sends the default values to Storage Connect.
+* Record time reminder notification is set.
+* Add a slider for tiredness.
+* Change the symptoms graphs so they are like those in the CityVerve app. 
+
 Built with the [Ionic Framework](https://ionicframework.com).
 
 ### Requirements
