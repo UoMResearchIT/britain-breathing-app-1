@@ -60,18 +60,18 @@ export class Login {
   }
 
   /** Change text depending on the register toggle value */
-  buttonText() {
-    if(this.login.register) {
-      // Change the button text
-      this.login.button = 'Register';
-
-      // Update the terms text
-      this.login.terms = 'registering';
-    } else {
-      this.login.button = 'Sign in';
-      this.login.terms = 'signing in';
-    }
-  }
+  // buttonText() {
+  //   if(this.login.register) {
+  //     // Change the button text
+  //     this.login.button = 'Register';
+  //
+  //     // Update the terms text
+  //     this.login.terms = 'registering';
+  //   } else {
+  //     this.login.button = 'Sign in';
+  //     this.login.terms = 'signing in';
+  //   }
+  // }
 
   /** Validate the usercodeinput */
   validateUsercode() {
@@ -285,7 +285,7 @@ export class Login {
                       // Show an alert about settings
                       let alert = this.alertCtrl.create({
                         title: 'New login',
-                        subTitle: 'If you are logging in on a new device, please update your settings information.',
+                        subTitle: 'If you are logging in on a new device, please review your Date of Birth and allergy information.',
                         buttons: ['OK']
                       });
                       alert.present();

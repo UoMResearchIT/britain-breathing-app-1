@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item>
         <ion-label>Select to register as a new user</ion-label>
-        <ion-toggle name="register" value="register" color="secondary" checked="true" [(ngModel)]="login.register" (click)="buttonText();checkAllFields()"></ion-toggle>
+        <ion-toggle name="register" value="register" color="secondary" checked="true" [(ngModel)]="login.register" (click)=checkAllFields();></ion-toggle>
       </ion-item>
 
       <ion-item>
@@ -33,7 +33,7 @@
       </ion-item>
 
       <div padding [hidden]="login.hidebutton">
-        <button ion-button full round (click)="signInUp()">{{login.button}}</button>
+        <button ion-button full round (click)="signInUp()">Next</button>
       </div>
     </ion-list>
 
