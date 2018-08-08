@@ -31,7 +31,7 @@ export class Register {
     datasharing: 0,
     dataprompt: 0,
     email: ''
-  }
+  };
 
   public allYears = [];
 
