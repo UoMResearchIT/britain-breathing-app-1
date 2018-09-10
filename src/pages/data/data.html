@@ -7,48 +7,49 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list radio-group [(ngModel)]="chartSelection">
-    <ion-item>
-      <ion-label>Nose</ion-label>
-      <ion-radio value="nose" (click)="showChart('nose')"></ion-radio>
-    </ion-item>
+<ion-content id="!data-page-content">
 
-    <ion-item>
-      <ion-label>Eyes</ion-label>
-      <ion-radio value="eyes" (click)="showChart('eyes')"></ion-radio>
-    </ion-item>
+  <p padding>Select a symptom from the list below to view the data</p>
+  <ion-item>
+    <ion-label>Select symptom</ion-label>
+    <ion-select (ionChange)="showChart()" [(ngModel)]="chartSelection">
+      <ion-option value="nose" id="!data-page-chart-selection-nose">Nose</ion-option>
+      <ion-option value="eyes" id="!data-page-chart-selection-eyes">Eyes</ion-option>
+      <ion-option value="breathing" id="!data-page-chart-selection-breathing">Breathing</ion-option>
+      <ion-option value="tiredness" id="!data-page-chart-selection-tiredness">Tiredness</ion-option>
+      <ion-option value="howimdoing" id="!data-page-chart-selection-howimdoing">How I'm Feeling</ion-option>
+    </ion-select>
+  </ion-item>
+  <br /><br />
 
-    <ion-item>
-      <ion-label>Breathing</ion-label>
-      <ion-radio value="breathing" (click)="showChart('breathing')"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>How I'm Doing</ion-label>
-      <ion-radio value="howimdoing" (click)="showChart('howimdoing')"></ion-radio>
-    </ion-item>
-  </ion-list>
-
-  <!--<p padding><strong>Last 14 symptom records</strong></p>-->
-
+  <!-- nose -->
   <div [hidden]="chart.nose" id="chart-nose">
     <div style="text-align:center;padding:0 20px 10px;">{{noseLoading}}</div>
     <canvas padding #nosechart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
 
+  <!-- eyes -->
   <div [hidden]="chart.eyes" id="chart-eyes">
     <div style="text-align:center;padding:0 20px 10px;">{{eyesLoading}}</div>
     <canvas padding #eyeschart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
 
+  <!-- mucus -->
   <div [hidden]="chart.breathing" id="chart-breathing">
     <div style="text-align:center;padding:0 20px 10px;">{{breathingLoading}}</div>
     <canvas padding #breathingchart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
 
+  <!-- tiredness -->
+  <div [hidden]="chart.tiredness" id="chart-tiredness">
+    <div style="text-align:center;padding:0 20px 10px;">{{tirednessLoading}}</div>
+    <canvas padding #tirednesschart width="480" height="300" style="margin:0 0 100px"></canvas>
+  </div>
+
+  <!-- how I'm doing -->
   <div [hidden]="chart.howimdoing" id="chart-howimdoing">
-    <div style="text-align:center;padding:0 20px 10px;">{{allLoading}}</div>
+    <div style="text-align:center;padding:0 20px 10px;">{{howimdoingLoading}}</div>
     <canvas padding #howimdoingchart width="480" height="300" style="margin:0 0 100px"></canvas>
   </div>
+
 </ion-content>

@@ -31,7 +31,7 @@ export class Register {
     datasharing: 0,
     dataprompt: 0,
     email: ''
-  }
+  };
 
   public allYears = [];
 
@@ -117,7 +117,7 @@ export class Register {
             var message = {
               "deviceid": deviceID,
               "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-              "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+              "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
               "eot": true
             };
             var messageString = JSON.stringify(message);

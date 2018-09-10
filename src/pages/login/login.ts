@@ -60,24 +60,24 @@ export class Login {
   }
 
   /** Change text depending on the register toggle value */
-  buttonText() {
-    if(this.login.register) {
-      // Change the button text
-      this.login.button = 'Register';
-
-      // Update the terms text
-      this.login.terms = 'registering';
-    } else {
-      this.login.button = 'Sign in';
-      this.login.terms = 'signing in';
-    }
-  }
+  // buttonText() {
+  //   if(this.login.register) {
+  //     // Change the button text
+  //     this.login.button = 'Register';
+  //
+  //     // Update the terms text
+  //     this.login.terms = 'registering';
+  //   } else {
+  //     this.login.button = 'Sign in';
+  //     this.login.terms = 'signing in';
+  //   }
+  // }
 
   /** Validate the usercodeinput */
   validateUsercode() {
     if(this.login.usercode.length <= 4) {
       // Invalid usercode
-      this.login.error.message = 'Usercode must be at least 5 characters';
+      this.login.error.message = 'Username must be at least 5 characters';
       this.login.error.hide = false;
     } else {
       this.login.error.hide = true;
@@ -163,7 +163,7 @@ export class Login {
     var base64Credentials = window.btoa(hashedUC+':'+this.login.password);
     var message = {
       "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-      "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+      "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
       "credentials": base64Credentials,
       "useragent": navigator.userAgent,
       "eot": true
@@ -217,7 +217,7 @@ export class Login {
                   var message = {
                     "deviceid": deviceID,
                     "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                    "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+                    "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
                     "eot": true
                   };
                   var messageString = JSON.stringify(message);
@@ -266,7 +266,7 @@ export class Login {
                   var message = {
                     "deviceid": deviceID,
                     "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                    "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+                    "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
                     "eot": true
                   };
                   var messageString = JSON.stringify(message);
@@ -285,7 +285,7 @@ export class Login {
                       // Show an alert about settings
                       let alert = this.alertCtrl.create({
                         title: 'New login',
-                        subTitle: 'If you are logging in on a new device, please update your settings information.',
+                        subTitle: 'If you are logging in on a new device, please review your Date of Birth and allergy information.',
                         buttons: ['OK']
                       });
                       alert.present();

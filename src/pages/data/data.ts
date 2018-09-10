@@ -9,17 +9,18 @@ import * as moment from 'moment-timezone';
   selector: 'page-data',
   templateUrl: 'data.html'
 })
+
 export class Data {
   @ViewChild('nosechart') nosechart;
   @ViewChild('eyeschart') eyeschart;
   @ViewChild('breathingchart') breathingchart;
-  @ViewChild('breathingchart') tirednesschart;
+  @ViewChild('tirednesschart') tirednesschart;
   @ViewChild('howimdoingchart') howimdoingchart;
 
   lineChart: any;
-
   public chartSelection = 'nose';
 
+  // charts
   public chart = {
     nose: false,
     eyes: false,
@@ -32,20 +33,41 @@ export class Data {
   public eyesLoading = 'Loading...';
   public breathingLoading = 'Loading...';
   public tirednessLoading = 'Loading...';
+  public howimdoingLoading = 'Loading...';
   public allLoading = 'Loading...';
 
+  // class constructor
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
               private storage: Storage) {
 
   }
 
+  // load charts and show nose chart by default
   ionViewDidLoad() {
     this.loadCharts();
+    this.hideAllCharts();
+    this.chartSelection = 'nose';
+    this.showChart();
   }
 
-  showChart(selection) {
-    switch(selection) {
+  // hide all the charts
+  hideAllCharts() {
+    this.chart.nose = true;
+    this.chart.eyes = true;
+    this.chart.breathing = true;
+    this.chart.tiredness = true;
+    this.chart.howimdoing = true;
+  }
+
+  // display selected chart
+  showChart() {
+
+    // first hide all charts
+    this.hideAllCharts();
+
+    // then show selected chart
+    switch (this.chartSelection) {
       case 'nose':
         this.chart.nose = false;
         this.chart.eyes = true;
@@ -55,7 +77,6 @@ export class Data {
         console.log('nose');
         break;
       case 'eyes':
-        this.chart.nose = true;
         this.chart.eyes = false;
         this.chart.breathing = true;
         this.chart.tiredness = true;
@@ -63,12 +84,13 @@ export class Data {
         console.log('eyes');
         break;
       case 'breathing':
-        this.chart.nose = true;
-        this.chart.eyes = true;
         this.chart.breathing = false;
         this.chart.tiredness = true;
         this.chart.howimdoing = true;
         console.log('breathing');
+        break;
+      case 'tiredness':
+        this.chart.tiredness = false;
         break;
       case 'tiredness':
         this.chart.nose = true;
@@ -84,7 +106,6 @@ export class Data {
         this.chart.breathing = true;
         this.chart.tiredness = true;
         this.chart.howimdoing = false;
-        console.log('howimdoing');
         break;
       default:
         this.chart.nose = false;
@@ -93,139 +114,150 @@ export class Data {
         this.chart.tiredness = true;
         this.chart.howimdoing = true;
         console.log('default');
-    }
 
-    //this.loadCharts();
+        break;
+
+    }
   }
 
+  // load the chart data
   loadCharts() {
     console.log('Loading charts...');
-
-    // Get the data
     var self = this;
     this.storage.ready().then(() => {
       this.storage.get('graphdata').then((val) => {
-          var graphData = val;
+        var graphData = val;
+        console.log(graphData);
+        // process data
+        var noseRatings = ['Rating'];
+        console.log(noseRatings);
+        var eyesRatings = ['Rating'];
+        console.log(eyesRatings);
+        var breathingRatings = ['Rating'];
+        var tirednessRatings = ['Rating'];
+        var howimdoingRatings = ['Rating'];
+        console.log(howimdoingRatings);
+        var chartDates = ['Date'];
 
-          // Process the data
-          var noseRatings = ['Rating'];
-          var eyesRatings = ['Rating'];
-          var breathingRatings = ['Rating'];
-          var allRatings = ['Rating'];
-          var chartDates = ['Date'];
+        for (var key in graphData) {
+          if (graphData.hasOwnProperty(key)) {
 
-          for(var key in graphData) {
-            if(graphData.hasOwnProperty(key)) {
-              // Date
-              var t = moment.tz(graphData[key].readingDate, "Europe/London");
-              var date = t.format("DD-MM");
-              chartDates.push(date);
+            // date
+            var t = moment.tz(graphData[key].readingDate, "Europe/London");
+            var date = t.format("DD-MM");
+            chartDates.push(date);
 
-              // Nose ratings
-              noseRatings.push(graphData[key].nose);
-
-              // Eyes ratings
-              eyesRatings.push(graphData[key].eyes);
-
-              // Breathing ratings
-              breathingRatings.push(graphData[key].breathing);
-
-              // All ratings
-              var ratingAverage = 0;
-              if(graphData[key].nose > 0) { ratingAverage += graphData[key].nose}
-              if(graphData[key].eyes > 0) { ratingAverage += graphData[key].eyes}
-              if(graphData[key].breathing > 0) { ratingAverage += graphData[key].breathing}
-              ratingAverage = ratingAverage/3;
-              ratingAverage = Math.round(ratingAverage*10)/10;
-
-              allRatings.push(ratingAverage.toString());
-            }
+            // ratings
+            noseRatings.push(graphData[key].nose);
+            eyesRatings.push(graphData[key].eyes);
+            breathingRatings.push(graphData[key].breathing);
+            tirednessRatings.push(graphData[key].tiredness);
+            howimdoingRatings.push(graphData[key].homimdoing);
           }
+        }
 
-          // Draw the nose graph
-          if(noseRatings.length > 1) {
-            this.plotChart(self.nosechart.nativeElement, chartDates, noseRatings);
-            this.noseLoading = 'Ratings for nose symptoms';
-          } else {
-            // Show the no data message
-            this.noseLoading = 'No data to display.';
-          }
+        // draw nose graph
+        if (noseRatings.length > 1) {
+          this.plotChart(self.nosechart.nativeElement, chartDates, noseRatings);
+          this.noseLoading = 'Ratings for Nose symptoms';
+        } else {
+          this.noseLoading = 'No data to display.';
+        }
 
-          // Draw the eyes graph
-          if(eyesRatings.length > 1) {
-            this.plotChart(self.eyeschart.nativeElement, chartDates, eyesRatings);
-            this.eyesLoading = 'Ratings for eyes symptoms';
-          } else {
-            // Show the no data message
-            this.eyesLoading = 'No data to display.';
-          }
+        // draw eye graph
+        if (eyesRatings.length > 1) {
+          this.plotChart(self.eyeschart.nativeElement, chartDates, eyesRatings);
+          this.eyesLoading = 'Ratings for Eye symptoms';
+        } else {
+          this.eyesLoading = 'No data to display.';
+        }
 
-          // Draw the breathing graph
-          if(breathingRatings.length > 1) {
-            this.plotChart(self.breathingchart.nativeElement, chartDates, breathingRatings);
-            this.breathingLoading = 'Ratings for breathing symptoms';
-          } else {
-            // Show the no data message
-            this.breathingLoading = 'No data to display.';
-          }
+        // draw breathing graph
+        if (breathingRatings.length > 1) {
+          this.plotChart(self.breathingchart.nativeElement, chartDates, breathingRatings);
+          this.breathingLoading = 'Ratings for Breathing symptoms';
+        } else {
+          this.breathingLoading = 'No data to display.';
+        }
 
-          // Draw the howimdoing graph
-          if(allRatings.length > 1) {
-            this.plotChart(self.howimdoingchart.nativeElement, chartDates, allRatings);
-            this.allLoading = 'Average rating for all symptoms';
-          } else {
-            // Show the no data message
-            this.allLoading = 'No data to display.';
-          }
+        // draw tiredness graph
+        if (tirednessRatings.length > 1) {
+          this.plotChart(self.tirednesschart.nativeElement, chartDates, tirednessRatings);
+          this.tirednessLoading = 'Ratings for tiredness symptoms';
+        } else {
+          this.tirednessLoading = 'No data to display.';
+        }
 
-          setTimeout(function() {
-            self.chart.nose = false;
-            self.chart.eyes = true;
-            self.chart.breathing = true;
-            self.chart.howimdoing = true;
-          },500);
-        });
+        // draw howimdoing graph
+        if (howimdoingRatings.length > 1) {
+          this.plotChart(self.howimdoingchart.nativeElement, chartDates, howimdoingRatings);
+          console.log(howimdoingRatings);
+          this.howimdoingLoading = 'Ratings for "How Are You Feeling Today?" (0 = Great, 1 = So-so, 2 = Bad)';
+        } else {
+          this.howimdoingLoading = 'No data to display.';
+        }
+
       });
+    });
+  }
+
+  // plot the chars
+  plotChart(chartID, chartDates, chartRatings) {
+
+    // limit to 14 records
+    if (chartDates.length > 14) {
+      chartDates = chartDates.slice(Math.max(chartDates.length - 14, 1));
+      chartRatings = chartRatings.slice(Math.max(chartRatings.length - 14, 1));
     }
 
-    plotChart(chartID, chartDates, chartRatings) {
-      // Limit to 14 records
-      if(chartDates.length > 14) {
-        chartDates = chartDates.slice(Math.max(chartDates.length - 14, 1));
-        chartRatings = chartRatings.slice(Math.max(chartRatings.length - 14, 1));
-      }
-
-      // Make the chart
-      this.lineChart = new Chart(chartID, {
-            type: 'line',
-            data: {
-                labels: chartDates,
-                datasets: [
-                    {
-                        label: "Rating",
-                        fill: true,
-                        strokeLineWidth: 5,
-                        lineTension: 0.1,
-                        backgroundColor: "rgba(0,159,227,1)",
-                        borderColor: "rgba(75,192,192,1)",
-                        borderCapStyle: 'butt',
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        borderJoinStyle: 'miter',
-                        pointBorderColor: "rgba(0,159,227,1)",
-                        pointBackgroundColor: "#fff",
-                        pointBorderWidth: 3,
-                        pointHoverRadius: 3,
-                        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                        pointHoverBorderColor: "rgba(220,220,220,1)",
-                        pointHoverBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHitRadius: 20,
-                        data: chartRatings,
-                        spanGaps: false,
-                    }
-                ]
+    // make the chart
+    this.lineChart = new Chart(chartID, {
+      type: 'line',
+      data: {
+        labels: chartDates,
+        datasets: [
+          {
+            fill: false,
+            strokeLineWidth: 5,
+            lineTension: 0.1,
+            backgroundColor: "rgba(0,159,227,1)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(0,159,227,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 3,
+            pointHoverRadius: 3,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 20,
+            data: chartRatings,
+            spanGaps: false,
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 3,
+              stepSize: 1,
+              beginAtZero: true
             }
-        });
-    }
+          }]
+        }
+      }
+    });
+
+    //this.lineChart.config.data.datasets[0].pointBackgroundColor = "#00CCBB";
+    //this.lineChart.update();
+  }
 }

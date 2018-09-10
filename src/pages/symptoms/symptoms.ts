@@ -13,6 +13,7 @@ import * as moment from 'moment-timezone';
   templateUrl: 'symptoms.html',
   providers: [Geolocation]
 })
+
 export class Symptoms {
 
   public symptoms = {
@@ -20,18 +21,19 @@ export class Symptoms {
     nose: 0,
     breathing: 0,
     eyes: 0,
+    tiredness: 0,
     meds: 0,
     datetime: '',
     lat: 0.0,
     long: 0.0,
     rating: ['None', 'Mild', 'Moderate', 'Severe']
-  }
+  };
 
   public page = {
     howfeeling: false,
     symptoms: true,
     thanks: true
-  }
+  };
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
@@ -39,11 +41,11 @@ export class Symptoms {
               public geo: Geolocation,
               private storage: Storage,
               public loadingCtrl: LoadingController
-              ) {
+  ) {
     this.http = http;
   }
 
-  symptomsPage(feeling) {
+  symptomsPage(howfeeling) {
     var self = this;
 
     // Confirm medication taken, then show allergy symptoms page
@@ -56,6 +58,7 @@ export class Symptoms {
           role: 'cancel',
           handler: () => {
             console.log('No clicked');
+            this.symptoms.howfeeling = howfeeling;
             self.showSymptomsPage(false);
           }
         },
@@ -63,7 +66,48 @@ export class Symptoms {
           text: 'Yes',
           handler: () => {
             console.log('Yes clicked');
+            this.symptoms.howfeeling = howfeeling;
             self.showSymptomsPage(true);
+          }
+        }
+      ]
+    });
+    alert.present(alert);
+  }
+
+
+  // user clicks "Great" says if they took medicine then returns to home page after passing default values to Storage Connect
+  symptomsNoPage(howfeeling){
+
+    var self = this;
+    // Confirm medication taken, then show allergy symptoms page
+    let alert = this.alertCtrl.create({
+
+      title: 'Please confirm:',
+      message: 'Have you taken your medication for allergies today?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('No clicked (No symptoms)');
+            this.symptoms.howfeeling = howfeeling;
+            self.showNoSymptomsPage(false);
+            this.page.howfeeling = true;
+            self.page.thanks = false;
+            self.page.symptoms = true;
+          },
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Yes clicked');
+            this.symptoms.howfeeling = howfeeling;
+            self.showNoSymptomsPage(true);
+            this.page.howfeeling = true;
+            self.page.thanks = false;
+            self.page.symptoms = true;
+            console.log('Default Symptoms Processed');
           }
         }
       ]
@@ -73,12 +117,18 @@ export class Symptoms {
 
   showSymptomsPage(meds) {
     this.symptoms.meds = meds;
-
     this.page.howfeeling = true;
     this.page.symptoms = false;
   }
 
+  // Processes defualt values
+  showNoSymptomsPage(meds) {
+    this.symptoms.meds = meds;
+    this.processSymptoms()
+  }
+
   processSymptoms() {
+    console.log('Process Symptoms Function Called');
     var loading = this.loadingCtrl.create({
       content: 'Sending data...',
       dismissOnPageChange: false
@@ -88,38 +138,47 @@ export class Symptoms {
     var self = this;
 
     this.storage.ready().then(() => {
-      var userdata;
+      console.log('Storage Set-Up');
+      let userdata;
       var bearerToken;
       var deviceID;
       this.storage.get('config').then((val) => { userdata = val;
         this.storage.get('bearerToken').then((val) => { bearerToken = val;
           this.storage.get('deviceID').then((val) => { deviceID = val;
+            console.log('Get Device ID, bearer Token, userdata from config etc');
             /*
-            let alert = this.alertCtrl.create({
-              title: 'Saved Data',
-              subTitle: userdata+' - '+bearerToken+' - '+deviceID,
-              buttons: ['OK']
-            });
-            alert.present();
-            */
+              let alert = this.alertCtrl.create({
+                title: 'Saved Data',
+                subTitle: userdata+' - '+bearerToken+' - '+deviceID,
+                buttons: ['OK']
+              });
+              alert.present();
+              */
 
             // Set the datetime
             this.symptoms.datetime = moment.tz("Europe/London").format();
+            console.log('Set-up Datetime');
+
+            // Send the data to the API
+            var gender = (userdata.gender == 0) ? 'M': 'F';
+            console.log('Gender');
 
             // Update the location data
             this.geo.getCurrentPosition().then((resp) => {
-              this.symptoms.lat = Number((resp.coords.latitude).toFixed(3));
-              this.symptoms.long = Number((resp.coords.longitude).toFixed(3));
+              this.symptoms.lat = Number(resp.coords.latitude.toFixed(2));
+              this.symptoms.long = Number(resp.coords.longitude.toFixed(2));
+              console.log(this.symptoms.lat);
+              console.log(this.symptoms.long);
 
-              // Send the data to the API
-              var gender = (userdata.gender == 0) ? 'M': 'F';
+              console.log('Location Data');
 
               var message = {
                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                "studyid": "e666e943-3cec-4b8d-9e80-e37bb3cafd76",
+                "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
                 "deviceid": deviceID,
                 "datapacket": {
                   "readingDate": this.symptoms.datetime,
+                  "alerttime": userdata.alerttime,
                   "latitude": this.symptoms.lat,
                   "longitude": this.symptoms.long,
                   "gender": gender,
@@ -127,15 +186,18 @@ export class Symptoms {
                   "allergyConsent": true,
                   "hayFever": userdata.allergies.hayfever,
                   "asthma": userdata.allergies.asthma,
-                  "otherAllegy": userdata.allergies.other,
+                  "otherAllergy": userdata.allergies.other,
                   "unknownAllergy": userdata.allergies.unknown,
+                  "howimdoing": this.symptoms.howfeeling,
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,
                   "eyes": this.symptoms.eyes,
+                  "tiredness":this.symptoms.tiredness,
                   "takenMedication": this.symptoms.meds
                 },
                   "eot":true
               };
+              console.log(message);
 
               var baseURL = 'https://storageconnect.manchester.ac.uk';
               var apiURL = baseURL+'/api/v1/upload/';
@@ -150,6 +212,7 @@ export class Symptoms {
                   loading.dismiss();
                   self.page.thanks = false;
                   self.page.symptoms = true;
+                  console.log('Data Successfully Sent');
 
                   // Save the data locally for graphing
                   // Get the graph JSON to update
@@ -158,6 +221,8 @@ export class Symptoms {
                       // First time, create the graph JSON first
                       var graphData = {}
                     }
+                    console.log(graphData);
+                    console.log('Data Saved Locally for Graphing');
 
                     // Update with the new data
                     graphData[Date.now()] = message.datapacket;
@@ -176,14 +241,14 @@ export class Symptoms {
                 }
 
               }, error => {
-                  // Something went wrong
-                  loading.dismiss();
-                  let alert = this.alertCtrl.create({
-                    title: 'Error Sending Data',
-                    subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
-                    buttons: ['OK']
-                  });
-                  alert.present();
+                // Something went wrong
+                loading.dismiss();
+                let alert = this.alertCtrl.create({
+                  title: 'Error Sending Data',
+                  subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
+                  buttons: ['OK']
+                });
+                alert.present();
               });
             }).catch((error) => {
               //console.log('Error getting location', error);
@@ -198,10 +263,12 @@ export class Symptoms {
   finishedSymptoms() {
     console.log('Finished symptoms');
 
-    this.navCtrl.setRoot(Home);
-
     this.page.howfeeling = false;
     this.page.thanks = true;
+
+    this.navCtrl.setRoot(Home);
+
+
   }
 
 }

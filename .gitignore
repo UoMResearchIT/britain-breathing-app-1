@@ -2,6 +2,16 @@
 # http://git-scm.com/docs/gitignore
 
 .DS_STORE
-.tmp/
-node_modules/
-plugins/
+
+.tmp/*
+node_modules/*
+plugins/*
+platforms/*
+
+.idea
+
+.sass-cache
+*.swp
+*.swo
+*.log
+*.DS_Store
