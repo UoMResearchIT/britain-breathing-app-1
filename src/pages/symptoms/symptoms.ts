@@ -205,60 +205,136 @@ export class Symptoms {
               var options = new RequestOptions({ headers: headers });
               var messageString = JSON.stringify(message);
 
-              this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
-                // Success
-                if(data.Code < 200) {
-                  // Show the thanks page
-                  loading.dismiss();
-                  self.page.thanks = false;
-                  self.page.symptoms = true;
-                  console.log('Data Successfully Sent');
+              // Sends the unsentData
 
-                  // Save the data locally for graphing
-                  // Get the graph JSON to update
-                  this.storage.get('graphdata').then((val) => { graphData = val;
-                    if(!graphData) {
-                      // First time, create the graph JSON first
-                      var graphData = {}
+              this.storage.get('unsentData').then((unsentData) => {
+
+                // If the unsent data exists do the following
+                if(unsentData) {
+
+                  // Find the length of the array holding the unsent data (0 == 1 etc, hence -1)
+                  var unsentDataLength = ((unsentData.length) - 1);
+
+                  // for each value in the array
+                  for (var unsentdata of unsentData )
+                  {
+
+                    // if the data sends successfully find the in index of the data in the array.
+                    if (this.http.post(apiURL, unsentdata, options).map(res => res.json()).subscribe(data => {
+                    })) {
+
+                      var data_index = unsentData.indexOf(unsentdata);
+
+                      // if the data is the last in the array remove all the data.
+                      if (unsentDataLength == data_index) {
+
+                        this.storage.remove('unsentData');
+
+                      }
+                      // unsentData.splice(index,1);
+
+
+                      }
+
                     }
-                    console.log(graphData);
-                    console.log('Data Saved Locally for Graphing');
+                  }});
 
-                    // Update with the new data
-                    graphData[Date.now()] = message.datapacket;
-
-                    // Save the graph JSON
-                    this.storage.set('graphdata', graphData);
+                  this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
+                    // Success
+                    if(data.Code < 200) {
+                      // Show the thanks page
+                      loading.dismiss();
+                      self.page.thanks = false;
+                      self.page.symptoms = true;
+                      console.log('Data Successfully Sent');
+    
+                      // Save the data locally for graphing
+                      // Get the graph JSON to update
+                      this.storage.get('graphdata').then((val) => {
+                        graphData = val;
+                        if(!graphData) {
+                          // First time, create the graph JSON first
+                          var graphData = {}
+                        }
+                        console.log(graphData);
+                        console.log('Data Saved Locally for Graphing');
+    
+                        // Update with the new data
+                        graphData[Date.now()] = message.datapacket;
+    
+                        // Save the graph JSON
+                        this.storage.set('graphdata', graphData);
+                      });
+                    } else {
+                      loading.dismiss();
+                      let alert = this.alertCtrl.create({
+                        title: 'Error Sending Data',
+                        subTitle: data.Message,
+                        buttons: ['OK']
+                      });
+                      alert.present();
+                    }
+    
+                  }, error => {
+                    // Something went wrong
+                    loading.dismiss();
+                    let alert = this.alertCtrl.create({
+                      title: 'Error Sending Data',
+                      subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
+                      buttons: [{
+                        text: 'OK',
+                        handler: () => {
+                          this.finishedSymptoms();
+                    }
+    
+                      }]
+    
+                    });
+    
+                    //  Save Data Locally as unsentData variable (graphData is already saved)
+                    this.storage.get('unsentData').then((val) => {
+                      unsentData = val;
+                      if (!unsentData) {
+                        // First time, create
+                        var unsentData = [];
+                        unsentData.push(messageString);
+                        this.storage.set('unsentData', unsentData);
+                      }
+    
+                      else {
+                        unsentData.push(messageString);
+                        this.storage.set('unsentData', unsentData);
+                      }
+    
+                    });
+    
+    
+                    this.storage.get('graphdata').then((val) => { graphData = val;
+                      if(!graphData) {
+                        // First time, create the graph JSON first
+                        var graphData = {}
+                      }
+                      // console.log(graphData);
+                      console.log('Data Saved Locally for Graphing');
+    
+                      // Update with the new data
+                      graphData[Date.now()] = message.datapacket;
+    
+                      // Save the graph JSON
+                      this.storage.set('graphdata', graphData);
+                    });
+    
+                    alert.present();
                   });
-                } else {
+                }).catch((error) => {
+                  //console.log('Error getting location', error);
                   loading.dismiss();
-                  let alert = this.alertCtrl.create({
-                    title: 'Error Sending Data',
-                    subTitle: data.Message,
-                    buttons: ['OK']
-                  });
-                  alert.present();
-                }
-
-              }, error => {
-                // Something went wrong
-                loading.dismiss();
-                let alert = this.alertCtrl.create({
-                  title: 'Error Sending Data',
-                  subTitle: 'Your data could not be sent at this time. Please check your connection and try again.',
-                  buttons: ['OK']
                 });
-                alert.present();
               });
-            }).catch((error) => {
-              //console.log('Error getting location', error);
-              loading.dismiss();
             });
           });
         });
-      });
-    });
-  }
+      }
 
   finishedSymptoms() {
     console.log('Finished symptoms');
