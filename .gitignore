@@ -4,11 +4,14 @@
 .DS_STORE
 
 .tmp/*
-node_modules/*
-plugins/*
+node_modules/
+plugins/
 platforms/*
+www/*
+
 
 .idea
+.vscode
 
 .sass-cache
 *.swp
