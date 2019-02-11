@@ -18,7 +18,7 @@
 
       <ion-list radio-group [(ngModel)]="registration.gender">
         <ion-list-header>
-          Gender
+          Biological Sex
         </ion-list-header>
 
         <ion-item>
@@ -32,12 +32,12 @@
         </ion-item>
       </ion-list>
 
-      <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
+      <a class="symptoms-slider-header" padding align="center" (click)="processGenderBirthYear()">Next</a>
 
     </ion-slide>
 
     <ion-slide padding>
-      <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
+      <a class="symptoms-slider-header" padding align="center" (click)="processAllergy()">Next</a>
       <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
       <ion-icon name="flower" class="center"></ion-icon>
       <h2 padding>Your allergies</h2>

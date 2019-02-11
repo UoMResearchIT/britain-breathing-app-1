@@ -68,6 +68,42 @@ export class Register {
     //console.log(this.allYears);
   }
 
+  processGenderBirthYear() {
+    if (this.registration.dob == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Please select a birth year',
+        buttons: ['OK']
+      });
+      alert.present();
+    } else {
+      if (this.registration.gender == null) {
+        let alert = this.alertCtrl.create({
+          title: 'Please select a biological sex',
+          buttons: ['OK']
+        });
+        alert.present();
+      } else {
+        this.nextSlide();
+      }
+    }
+}
+
+processAllergy() {
+  if (
+    this.registration.allergies.hayfever  == false &&
+    this.registration.allergies.asthma == false && 
+    this.registration.allergies.other == false && 
+    this.registration.allergies.unknown == false) {
+    let alert = this.alertCtrl.create({
+      title: 'Please select an option',
+      buttons: ['OK']
+    });
+    alert.present();
+  } else {
+    this.nextSlide();
+  }
+}
+
   onboardingComplete() {
     // Show the loader
     var loading = this.loadingCtrl.create({
