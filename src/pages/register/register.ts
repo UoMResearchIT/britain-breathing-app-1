@@ -209,7 +209,13 @@ export class Register {
   nextSlide() {
     this.slides.lockSwipes(false);
     this.slides.slideNext(500);
-    this.slides.lockSwipes(true);
+    // this.slides.lockSwipes(true);
+  }
+
+  slidePrev() {
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev(500);
+    // this.slides.lockSwipes(true);
   }
 
 }
