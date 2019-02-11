@@ -38,7 +38,7 @@
 
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
-
+      <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
       <ion-icon name="flower" class="center"></ion-icon>
       <h2 padding>Your allergies</h2>
       <p padding>Let us know what allergies you have.</p>
@@ -72,6 +72,7 @@
 
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
+      <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
 
       <ion-icon name="alarm" class="center"></ion-icon>
       <h2 padding>Alerts</h2>
@@ -86,8 +87,10 @@
         <ion-datetime displayFormat="HH:mm" [(ngModel)]="registration.alerttime"></ion-datetime>
       </ion-item>
     </ion-slide>
+
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>
+      <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
 
       <ion-icon name="contacts" class="center"></ion-icon>
       <h2 padding>Contact</h2>
@@ -101,6 +104,7 @@
 
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()" [hidden]="terms.notagreed">Next</a>
+      <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
 
       <ion-icon name="analytics" class="center"></ion-icon>
       <h2 padding>Data sharing</h2>
