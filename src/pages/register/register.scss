@@ -29,7 +29,15 @@ page-register {
     display: block;
     text-align: right;
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
+  }
+
+  .symptoms-slider-header-prev {
+    display: block;
+    text-align: left;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
