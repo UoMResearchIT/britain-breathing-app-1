@@ -18,7 +18,7 @@
 
       <ion-list radio-group [(ngModel)]="registration.gender">
         <ion-list-header>
-          Biological Sex
+            Sex assigned at birth
         </ion-list-header>
 
         <ion-item>
@@ -30,6 +30,13 @@
           <ion-label>Female</ion-label>
           <ion-radio value="1"></ion-radio>
         </ion-item>
+      
+        <ion-item>
+          <ion-label>Prefer not to say</ion-label>
+          <ion-radio value="2"></ion-radio>
+        </ion-item>
+      
+      
       </ion-list>
 
       <a class="symptoms-slider-header" padding align="center" (click)="processGenderBirthYear()">Next</a>

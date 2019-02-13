@@ -78,7 +78,7 @@ export class Register {
     } else {
       if (this.registration.gender == null) {
         let alert = this.alertCtrl.create({
-          title: 'Please select a biological sex',
+          title: 'Please select an option',
           buttons: ['OK']
         });
         alert.present();
@@ -245,13 +245,13 @@ processAllergy() {
   nextSlide() {
     this.slides.lockSwipes(false);
     this.slides.slideNext(500);
-    // this.slides.lockSwipes(true);
+    this.slides.lockSwipes(true);
   }
 
   slidePrev() {
     this.slides.lockSwipes(false);
     this.slides.slidePrev(500);
-    // this.slides.lockSwipes(true);
+    this.slides.lockSwipes(true);
   }
 
 }

@@ -21,7 +21,7 @@
 
   <ion-list radio-group [(ngModel)]="registration.gender" (ionChange)="saveSettings(false)">
     <ion-list-header>
-      Gender
+      Sex assigned at birth
     </ion-list-header>
 
     <ion-item>
@@ -33,6 +33,12 @@
       <ion-label>Female</ion-label>
       <ion-radio value="1"></ion-radio>
     </ion-item>
+
+    <ion-item>
+      <ion-label>Prefer not to say</ion-label>
+      <ion-radio value="2"></ion-radio>
+    </ion-item>
+
   </ion-list>
 
   <ion-list>

@@ -160,7 +160,17 @@ export class Symptoms {
             console.log('Set-up Datetime');
 
             // Send the data to the API
-            var gender = (userdata.gender == 0) ? 'M': 'F';
+
+            if (userdata.gender == 0) {
+              var gender = 'M'
+            }
+            else if (userdata.gender == 1) {
+              var gender = 'F'
+            }
+            else {
+            var gender = 'PNTS'}
+
+
             console.log('Gender');
 
             // Update the location data
