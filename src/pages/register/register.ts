@@ -8,6 +8,7 @@ import { Terms } from '../login/terms';
 
 import { Storage } from '@ionic/storage';
 import 'rxjs/Rx';
+import { isString } from 'ionic-angular/umd/util/util';
 
 @Component({
   selector: 'page-register',
@@ -104,7 +105,66 @@ processAllergy() {
   }
 }
 
-  onboardingComplete() {
+usernameCheck() {
+  var loading = this.loadingCtrl.create({
+    content: 'Saving your details...'
+  });
+  loading.present();
+
+  // Send data to the API
+  // Post the registration details
+  this.storage.ready().then(() => {
+    this.storage.get('userdata').then((val) => {
+      var message = val;
+
+      // If an email address has been added, add them to the mailing list
+      var email = this.registration.email;
+      if(email.length > 0) {
+        message.emailaddress = this.registration.email;
+        message.mailinglist = true;
+      } else {
+        message.mailinglist = false;
+      }
+
+      var messageString = JSON.stringify(message);
+      console.log(messageString);
+
+      var baseURL = 'https://storageconnect.manchester.ac.uk';
+      var apiURL = baseURL+'/api/v1/register/';
+      var headers = new Headers({'Content-Type': 'application/json'});
+      var options = new RequestOptions({ headers: headers });
+
+      // Save the registration data
+      this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
+          // Registration successful, save the relevant details
+          loading.dismiss();
+
+          //var userInfo = JSON.stringify(data.Details).split(':');
+          var userInfo = data.Details;
+          console.log('userInfo -' + userInfo)
+
+          var userInfoString = JSON.stringify(userInfo);
+
+          console.log(userInfoString)
+
+          if (userInfoString.includes("AppUser1")) {
+            let alert = this.alertCtrl.create({
+              title: 'Username Error',
+              subTitle: 'Username already in use.',
+              buttons: ['OK']
+            });
+            alert.present();          } 
+          else {
+            this.onboardingComplete()
+          }
+          
+        }
+      )}
+    )}
+  )}
+
+
+onboardingComplete() {
     // Show the loader
     var loading = this.loadingCtrl.create({
       content: 'Saving your details...'
@@ -127,7 +187,7 @@ processAllergy() {
         }
 
         var messageString = JSON.stringify(message);
-        //console.log(messageString);
+        console.log(messageString);
 
         var baseURL = 'https://storageconnect.manchester.ac.uk';
         var apiURL = baseURL+'/api/v1/register/';
@@ -192,7 +252,7 @@ processAllergy() {
                     // Set the notification
                     this.localNotifications.schedule({
                       id: 1,
-                      text: 'Please log your symptoms for today.',
+                      text: 'Save.',
                       every: 'day',
                       at: tomorrow
                     });
@@ -253,5 +313,8 @@ processAllergy() {
     this.slides.slidePrev(500);
     this.slides.lockSwipes(true);
   }
+
+
+
 
 }
