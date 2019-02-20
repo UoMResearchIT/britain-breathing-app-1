@@ -262,7 +262,7 @@ onboardingComplete() {
             }, error => {
                 let alert = this.alertCtrl.create({
                   title: 'Registration Verify Error',
-                  subTitle: 'An error occurred registering your details. You may need to close the app and start again. Details: '+error.Message,
+                  subTitle: 'A user with the same username may already exist. Please enter a different username. Details: '+error.Message,
                   buttons: ['OK']
                 });
                 alert.present();
