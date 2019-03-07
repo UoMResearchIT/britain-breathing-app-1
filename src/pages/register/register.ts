@@ -141,6 +141,25 @@ onboardingComplete() {
             // Registration successful, save the relevant details
             loading.dismiss();
 
+            console.log('What code is the server returning?');
+            console.log(data.Code)
+
+            // If data.code returns 210 it means the user laready exists. An error message is presented.
+            if (data.Code == 210) {
+                  
+                  let alert = this.alertCtrl.create({
+                  title: 'Registration Error',
+                  subTitle: 'A user with the same username may already exist. Please enter a different username.',
+                  buttons: ['OK']
+                });
+                alert.present();
+                return;
+              }
+
+            else() => {
+              return;
+            }
+
             //var userInfo = JSON.stringify(data.Details).split(':');
             var userInfo = data.Details;
             userInfo = userInfo.split(':');
@@ -204,7 +223,7 @@ onboardingComplete() {
             }, error => {
                 let alert = this.alertCtrl.create({
                   title: 'Registration Verify Error',
-                  subTitle: 'A user with the same username may already exist. Please enter a different username. Details: '+error.Message,
+                  subTitle: 'An error occurred registering your details. You may need to close the app and start again. Details: '+error.Message,
                   buttons: ['OK']
                 });
                 alert.present();
