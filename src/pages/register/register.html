@@ -43,39 +43,104 @@
 
     </ion-slide>
 
+    
     <ion-slide padding>
-      <a class="symptoms-slider-header" padding align="center" (click)="processAllergy()">Next</a>
-      <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
+      <!--<a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>-->
+      <!--<a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Próximo</a>-->
+
+      <!-- Your Respiratory Problems -->
+
       <ion-icon name="flower" class="center"></ion-icon>
-      <h2 padding>Your allergies</h2>
-      <p padding>Let us know what allergies you have.</p>
+      <h2 padding>Respiratory Conditions</h2>
+      <p padding>Let us know what respiratory problems you may have.</p>
+
 
       <ion-list>
-        <ion-list-header>
-          Allergy types
-        </ion-list-header>
+
+          <ion-item>
+              <ion-label>Asthma</ion-label>
+              <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="1"></ion-checkbox>
+          </ion-item>
 
         <ion-item>
-          <ion-label>Hayfever (pollen)</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="1"></ion-checkbox>
+          <ion-label>Sinusitis</ion-label>
+          <ion-checkbox [(ngModel)]="registration.allergies.sinusitis" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
-          <ion-label>Asthma</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.asthma" value="1"></ion-checkbox>
+          <ion-label>Rhinitis</ion-label>
+          <ion-checkbox [(ngModel)]="registration.allergies.rhinitis" value="1"></ion-checkbox>
         </ion-item>
 
         <ion-item>
-          <ion-label>Other allergy e.g. dust</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.other" value="1"></ion-checkbox>
-        </ion-item>
+            <ion-label>Other</ion-label>
+            <ion-checkbox [(ngModel)]="registration.allergies.res_others" value="1"></ion-checkbox>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Unknown allergy</ion-label>
-          <ion-checkbox [(ngModel)]="registration.allergies.unknown" value="1"></ion-checkbox>
-        </ion-item>
+          <ion-item>
+              <ion-label>None</ion-label>
+              <ion-checkbox [(ngModel)]="registration.allergies.res_none" value="1"></ion-checkbox>
+            </ion-item>
+
+
       </ion-list>
+       <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Prev</a>
+      <a class="symptoms-slider-header" padding align="center" (click)="processRespiratory()">Next</a>
     </ion-slide>
+
+
+  <ion-slide padding>
+
+    <!-- Your Allergies -->
+
+
+    <ion-icon name="flower" class="center"></ion-icon>
+    <h2 padding>Your allergies</h2>
+    <p padding>Let us know what allergies you have.</p>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Hayfever (pollen)</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.hayfever" value="1"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Dust</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.dust" value="1"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Pet Hair</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.pet_hair" value="1"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Mites</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.mites" value="1"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Smoke</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.smoke" value="1"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Other</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.al_others" value="1"></ion-checkbox>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>None</ion-label>
+        <ion-checkbox [(ngModel)]="registration.allergies.al_none" value="1"></ion-checkbox>
+      </ion-item>
+
+  </ion-list>
+
+     <!--<a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>-->
+     <a class="symptoms-slider-header-prev" padding align="center" (click)="slidePrev()">Previous</a>
+    <a class="symptoms-slider-header" padding align="center" (click)="processAllergy()">Next</a>
+  </ion-slide>
 
     <ion-slide padding>
       <a class="symptoms-slider-header" padding align="center" (click)="nextSlide()">Next</a>

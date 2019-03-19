@@ -22,10 +22,20 @@ export class Register {
     dob: 0,
     gender: null,
     allergies: {
-      hayfever: false,
-      asthma: false,
-      other: false,
-      unknown: false
+   // Respiratory
+        asthma: false,
+        sinusitis: false,
+        rhinitis: false,
+        res_others: false,
+        res_none: false,
+        // Allergies
+        hayfever: false,
+        dust: false,
+        pet_hair: false,
+        mites: false,
+        smoke: false,
+        al_others: false,
+        al_none: false
     },
     alert: 1,
     alerttime: '09:00',
@@ -89,14 +99,36 @@ export class Register {
     }
 }
 
+processRespiratory() {
+  if (
+    this.registration.allergies.asthma  == false &&
+    this.registration.allergies.sinusitis == false &&
+    this.registration.allergies.rhinitis == false &&
+    this.registration.allergies.res_others == false &&
+    this.registration.allergies.res_none == false) {
+    let alert = this.alertCtrl.create({
+      // title: 'Please provide an answer for all questions',
+      title: 'Por favor, forneça uma resposta',
+      buttons: ['OK']
+    });
+    alert.present();
+  } else {
+    this.nextSlide();
+  }
+}
+
 processAllergy() {
   if (
     this.registration.allergies.hayfever  == false &&
-    this.registration.allergies.asthma == false && 
-    this.registration.allergies.other == false && 
-    this.registration.allergies.unknown == false) {
+    this.registration.allergies.dust == false &&
+    this.registration.allergies.pet_hair == false &&
+    this.registration.allergies.mites == false &&
+    this.registration.allergies.smoke == false &&
+    this.registration.allergies.al_others == false &&
+    this.registration.allergies.al_none == false) {
     let alert = this.alertCtrl.create({
-      title: 'Please select an option',
+      // title: 'Please provide an answer for all questions',
+      title: 'Por favor, forneça uma resposta',
       buttons: ['OK']
     });
     alert.present();

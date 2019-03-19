@@ -194,10 +194,22 @@ export class Symptoms {
                   "gender": gender,
                   "yearOfBirth": parseInt(userdata.dob),
                   "allergyConsent": true,
-                  "hayFever": userdata.allergies.hayfever,
+          
+                  // Respiratory
                   "asthma": userdata.allergies.asthma,
-                  "otherAllergy": userdata.allergies.other,
-                  "unknownAllergy": userdata.allergies.unknown,
+                  "sinusitis": userdata.allergies.sinusitis,
+                  "rhinitis":userdata.allergies.rhinitis,
+                  "res_others":userdata.allergies.res_others,
+                  "res_none":userdata.allergies.res_none,
+                  // Allergies
+                  "hayFever": userdata.allergies.hayfever,
+                  "dust": userdata.allergies.dust,
+                  "pet_hair": userdata.allergies.pet_hair,
+                  "mites": userdata.allergies.mites,
+                  "smoke": userdata.allergies.smoke,
+                  "al_others": userdata.allergies.al_others,
+                  "al_none": userdata.allergies.al_none,
+                  
                   "howimdoing": this.symptoms.howfeeling,
                   "nose": this.symptoms.nose,
                   "breathing": this.symptoms.breathing,

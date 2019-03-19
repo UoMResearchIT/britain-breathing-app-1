@@ -1,0 +1,94 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "readingDate": {
+        "type": "string"
+      },
+      "alerttime": {
+        "type": "string"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "yearOfBirth": {
+        "type": "integer"
+      },
+      "gender": {
+        "type": "string"
+      },
+      "allergyConsent": {
+        "type": "boolean"
+      },
+      "asthma": {
+        "type": "boolean"
+      },
+      "sinusitis": {
+        "type": "boolean"
+      },
+      "rhinitis": {
+        "type": "boolean"
+      },
+      "res_others": {
+        "type": "boolean"
+      },
+      "res_none": {
+        "type": "boolean"
+      },
+      "hayFever": {
+        "type": "boolean"
+      },
+      "dust": {
+        "type": "boolean"
+      },
+      "pet_hair": {
+        "type": "boolean"
+      },
+      "mites": {
+        "type": "boolean"
+      },
+      "smoke": {
+        "type": "boolean"
+      },
+      "al_others": {
+        "type": "boolean"
+      },
+      "al_none": {
+        "type": "boolean"
+      },
+       "howimdoing": {
+        "type": "integer"
+      },
+      "nose": {
+        "type": "integer"
+      },
+      "breathing": {
+        "type": "integer"
+      },
+      "eyes": {
+        "type": "integer"
+      },
+       "tiredness": {
+        "type": "integer"
+      },
+      "takenMedication": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "readingDate",
+      "latitude",
+      "longitude",
+      "yearOfBirth",
+      "gender",
+      "allergyConsent",
+      "nose",
+      "breathing",
+      "eyes",
+      "tiredness",
+      "takenMedication"
+    ]
+  }
