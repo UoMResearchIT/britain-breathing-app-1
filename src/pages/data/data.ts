@@ -152,7 +152,7 @@ export class Data {
             eyesRatings.push(graphData[key].eyes);
             breathingRatings.push(graphData[key].breathing);
             tirednessRatings.push(graphData[key].tiredness);
-            howimdoingRatings.push(graphData[key].homimdoing);
+            howimdoingRatings.push(graphData[key].howimdoing);
           }
         }
 
