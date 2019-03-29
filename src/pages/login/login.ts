@@ -255,7 +255,6 @@ export class Login {
                     alerttime: '09:00',
                     datasharing: 0,
                     dataprompt: 0,
-                    email: ''
                   }
                   this.storage.set('config', registration);
 

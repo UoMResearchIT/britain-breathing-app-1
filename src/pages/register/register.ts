@@ -41,7 +41,6 @@ export class Register {
     alerttime: '09:00',
     datasharing: 0,
     dataprompt: 0,
-    email: ''
   };
 
   public allYears = [];
@@ -151,15 +150,6 @@ onboardingComplete() {
       this.storage.get('userdata').then((val) => {
         var message = val;
 
-        // If an email address has been added, add them to the mailing list
-        var email = this.registration.email;
-        if(email.length > 0) {
-          message.emailaddress = this.registration.email;
-          message.mailinglist = true;
-        } else {
-          message.mailinglist = false;
-        }
-
         var messageString = JSON.stringify(message);
         console.log(messageString);
 
@@ -245,7 +235,7 @@ onboardingComplete() {
                     // Set the notification
                     this.localNotifications.schedule({
                       id: 1,
-                      text: 'Save.',
+                      text: 'Please log your symptoms for today.',
                       every: 'day',
                       at: tomorrow
                     });

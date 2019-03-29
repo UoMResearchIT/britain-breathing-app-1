@@ -35,7 +35,6 @@ export class Settings {
     alerttime: '09:00',
     datasharing: 0,
     dataprompt: 0,
-    email: ''
   };
 
   ionViewDidLoad() {
@@ -70,7 +69,6 @@ export class Settings {
   }
 
   saveSettings(updateEmail) {
-    var email = this.registration.email;
     var bearerToken;
     var deviceID;
 
@@ -78,53 +76,7 @@ export class Settings {
     this.storage.ready().then(() => {
        // Save settings
        this.storage.set('config', this.registration);
-
-       if(updateEmail === true) {
-        this.storage.get('bearerToken').then((val) => { bearerToken = val;
-          this.storage.get('deviceID').then((val) => { deviceID = val;
-             // Send the updated email to the API
-               var message = {
-                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                 "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
-                 "deviceid": deviceID,
-                 "emailaddress": email,
-                 "setting": true,
-                 "eot":true
-                };
-
-               if(email.length == 0) {
-                 // Remove from the mailing list if no email
-                 message.emailaddress = 'removed';
-                 message.setting = false;
-               }
-
-               var baseURL = 'https://storageconnect.manchester.ac.uk';
-               var apiURL = baseURL+'/api/v1/mailinglistflag/';
-               var headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Bearer '+bearerToken});
-               var options = new RequestOptions({ headers: headers });
-               var messageString = JSON.stringify(message);
-
-               // Save the email update
-               this.http.post(apiURL, messageString, options).map(res => res.json()).subscribe(data => {
-                 // email updated
-                 let alert = this.alertCtrl.create({
-                   title: 'Mailing List',
-                   subTitle: 'Your details have been updated. '+data.Message,
-                   buttons: ['OK']
-                 });
-                 alert.present();
-               }, error => {
-                 // update failed
-                 let alert = this.alertCtrl.create({
-                   title: 'Mailing List Error',
-                   subTitle: 'An error occurred updating your mailing list settings. Details: '+JSON.stringify(error),
-                   buttons: ['OK']
-                 });
-                 alert.present();
-               });
-             });
-           });
-         }
+         
      });
 
      // Update the Notification
