@@ -242,6 +242,7 @@ onboardingComplete() {
                   });
                 }
               });
+              console.log(this.localNotifications)
             }, error => {
                 let alert = this.alertCtrl.create({
                   title: 'Registration Verify Error',

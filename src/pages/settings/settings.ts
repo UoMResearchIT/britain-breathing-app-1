@@ -102,6 +102,7 @@ export class Settings {
        // Delete the notification
        this.localNotifications.cancelAll().then(() => {});
      }
+     console.log(this.localNotifications)
   }
 
   dismiss() {
