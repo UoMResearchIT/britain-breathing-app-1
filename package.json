@@ -24,13 +24,13 @@
     "@ionic/storage": "2.0.0",
     "chart.js": "^2.5.0",
     "cordova-android": "7.0.0",
-    "cordova-android-support-gradle-release": "^1.4.4",
+    "cordova-android-support-gradle-release": "^1.4.7",
     "cordova-common": "^2.2.3",
     "cordova-ios": "4.5.4",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-geolocation": "^4.0.1",
-    "cordova-plugin-ionic-keyboard": "^2.1.2",
+    "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -46,11 +46,13 @@
     "moment-timezone": "^0.5.13",
     "rxjs": "5.0.1",
     "sw-toolbox": "3.4.0",
+    "tslint": "^5.16.0",
+    "tsutils": "^2.29.0",
     "zone.js": "0.7.2"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.2.3",
-    "typescript": "2.0.10"
+    "typescript": "^2.3.4"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
