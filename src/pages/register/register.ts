@@ -196,7 +196,7 @@ onboardingComplete() {
             var message = {
               "deviceid": deviceID,
               "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-              "studyid": "53266d21-d8ed-43e4-8f3a-e2ff8a433be7",
+              "studyid": "bcc2a109-bd76-44b9-b9f6-5f6b4c0b2123",
               "eot": true
             };
             var messageString = JSON.stringify(message);
