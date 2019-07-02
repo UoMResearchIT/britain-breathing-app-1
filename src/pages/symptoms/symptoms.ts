@@ -184,7 +184,7 @@ export class Symptoms {
 
               var message = {
                 "clientkey": "b62ba943-8ba8-4c51-82ff-d45768522fc3",
-                "studyid": "bcc2a109-bd76-44b9-b9f6-5f6b4c0b2123",
+                "studyid": "b8d09065-719e-46de-a533-3e2f168ff227",
                 "deviceid": deviceID,
                 "datapacket": {
                   "readingDate": this.symptoms.datetime,
