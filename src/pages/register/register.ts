@@ -106,8 +106,8 @@ processRespiratory() {
     this.registration.allergies.res_others == false &&
     this.registration.allergies.res_none == false) {
     let alert = this.alertCtrl.create({
-      // title: 'Please provide an answer for all questions',
-      title: 'Por favor, forneça uma resposta',
+      title: 'Please provide an answer for all questions',
+      // title: 'Por favor, forneça uma resposta',
       buttons: ['OK']
     });
     alert.present();
@@ -126,8 +126,8 @@ processAllergy() {
     this.registration.allergies.al_others == false &&
     this.registration.allergies.al_none == false) {
     let alert = this.alertCtrl.create({
-      // title: 'Please provide an answer for all questions',
-      title: 'Por favor, forneça uma resposta',
+      title: 'Please provide an answer for all questions',
+      // title: 'Por favor, forneça uma resposta',
       buttons: ['OK']
     });
     alert.present();
